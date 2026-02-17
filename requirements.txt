@@ -1,0 +1,8 @@
+numpy
+matplotlib
+opencv-python
+transformers
+vllm==0.15.1
+qwen_vl_utils>=0.0.14
+pillow
+ipython
