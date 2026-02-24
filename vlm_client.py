@@ -30,24 +30,25 @@ class VLMClient:
         pil_images = [Image.open(p).convert("RGB") for p in image_paths]
 
         prompt_text = (
-            f"You are an expert scene analyzer. You see {len(pil_images)} recent views of the same {description} (object ID: {obj_id}).\n\n"
-            "Your task: list ONLY small, distinct, clearly visible objects that are:\n"
-            "- directly ON the object (if it has a surface like a table, shelf, bed), OR\n"
-            "- immediately NEAR it (within ~30 cm, e.g., on the floor next to a chair).\n\n"
+            f"You are an expert in spatial scene understanding. You are shown {len(pil_images)} recent views of the same object: '{description}' (ID: {obj_id}).\n\n"
+            "Identify ALL clearly visible items that have a DIRECT spatial relationship with this object.\n\n"
+            "For each item, determine the correct preposition:\n"
+            "- Use 'on' if it's placed ON TOP of a surface (e.g., lamp on desk).\n"
+            "- Use 'inside' if it's physically INSIDE a container (e.g., book inside shelves).\n"
+            "- Use 'near' if it's NEXT TO or BESIDE the object (e.g., shoes near carpet).\n\n"
+            "Note: Some regions in the image are masked in gray (#808080). These areas belong to other support objects and should be ignored. Focus only on visible items related to the target object - '{description}'.\n"
             "Rules:\n"
-            "- NEVER include the {description} itself.\n"
-            "- If you see NO such objects, return an empty JSON object: {{}}\n"
-            "- If you see objects, return EXACTLY ONE JSON key-value pair:\n"
-            "    Key format: \"[object1, object2, ...] on {description} id={obj_id}\"   (for horizontal surfaces)\n"
-            "    OR        : \"[object1, object2, ...] near {description} id={obj_id}\"  (for vertical/walls)\n"
-            "- Value must ALWAYS be an empty string: \"\"\n"
-            "- Use lowercase, no quotes inside the list, no extra spaces.\n"
-            "- NO explanations, NO markdown, NO extra text.\n"
-            "- Return VALID JSON ONLY.\n\n"
+            "- NEVER include the main object itself '{description}'.\n"
+            "- Group items by preposition.\n"
+            "- Output format: '[item1, item2] on {description} id={obj_id}; [item3] inside {description} id={obj_id}; ...'\n"
+            "- If multiple prepositions apply, list all of them, separated by '; '.\n"
+            "- If NO related items are visible, output exactly: 'none'\n"
+            "- Use lowercase English words, no quotes, no extra punctuation.\n"
+            "- Return ONLY the string. No explanations, no JSON, no markdown.\n\n"
             "Examples of GOOD output:\n"
-            '{{"[laptop, pillow] on bed id=127": ""}}\n'
-            '{{"[bottle, phone] on bookshelf id=73": ""}}\n'
-            "{{}}\n\n"
+            "[lamp, notebook] on desk id=42\n"
+            "[shampoo] inside cabinet id=70; [slippers] near cabinet id=70\n"
+            "none\n\n"
             "Now analyze the images and return your answer."
         )
 

@@ -3,11 +3,11 @@ import logging
 from pathlib import Path
 from config import *
 from data_loader import load_descriptions, load_frame_and_mask
-from support_object_selector import select_support_objects
+from support_object_utils import select_support_objects
 from cropper import save_crop
 from vlm_client import VLMClient
-from aggregator import collect_crops_by_object, save_final_result
-
+from aggregator import *
+from gt_builder import GTBuilder
 
 def setup_logging():
     logging.basicConfig(
@@ -34,24 +34,33 @@ def main():
     logger.info("Loading object descriptions...")
     descriptions = load_descriptions(DESC_PATH)
 
-    frame_names = sorted([f for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
+    frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
+    logger.info(f"Processing {len(frame_names)} frames...")
 
-    for frame_path in frame_names:
-        logger.info(f"Processing {frame_path.name}...")
-        rgb, mask = load_frame_and_mask(frame_path.name, FRAMES_DIR, MASKS_DIR)
+    gt_builder = GTBuilder(descriptions)
+    for frame_name in frame_names:
+        logger.info(f"Processing {frame_name}...")
+        rgb, mask = load_frame_and_mask(frame_name, FRAMES_DIR, MASKS_DIR)
         supports = select_support_objects(mask, descriptions)
-        frame_id = frame_path.stem
-        for obj in supports:
-            save_crop(rgb, obj["bbox"], obj["id"], frame_id, CROPS_DIR)
+        support_ids = [obj["id"] for obj in supports]
 
+        frame_id = frame_name.split(".")[0]
+        for obj in supports:
+            save_crop(rgb, mask, obj["bbox"], obj["id"], support_ids, frame_id, CROPS_DIR)
+
+
+        gt_builder.process_frame(mask, supports)
+
+    final_gt = gt_builder.build_final_gt()
+    save_final_gt(final_gt, GT_JSON)
+    logger.info(f"Ground truth saved to {GT_JSON}")
+    #'''
     logger.info("Initializing VLM client...")
     client = VLMClient()
     object_crops = collect_crops_by_object(CROPS_DIR)
     final_result = {}
 
     for obj_id, crop_paths in object_crops.items():
-        if not crop_paths:
-            continue
         desc = descriptions.get(obj_id, f"object_{obj_id}")
         selected = get_uniform_crops(crop_paths)
         logger.info(f"Querying VLM for {obj_id}: {desc} ({len(selected)} crops)")
@@ -61,10 +70,10 @@ def main():
             final_result[f"id_{obj_id}"] = response
         except Exception as e:
             final_result[f"id_{obj_id}"] = f"ERROR: {str(e)}"
-
+    
     save_final_result(final_result, OUTPUT_JSON)
     logger.info(f"Done! Results saved to {OUTPUT_JSON}")
-
+    #'''
 
 if __name__ == "__main__":
     main()

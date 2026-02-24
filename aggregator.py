@@ -14,6 +14,10 @@ def collect_crops_by_object(crops_dir: Path) -> dict[int, list[Path]]:
                 continue
     return object_crops
 
+def save_final_gt(final_gt: dict, output_path: Path):
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump({str(k): v for k, v in final_gt.items()}, f, ensure_ascii=False, indent=2)
+
 def save_final_result(result: dict, output_path: Path):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
