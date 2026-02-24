@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, Tuple
 from collections import defaultdict
 from config import FRAMES_SHARE, PADDING_RATIO_GT
-from support_object_utils import expand_bbox
+from support_objects.support_object_utils import expand_bbox
 
 
 def is_bbox_inside(inner: Tuple[int, int, int, int], outer: Tuple[int, int, int, int]) -> bool:
@@ -44,7 +44,7 @@ class GTBuilder:
                 if is_bbox_inside(small_bbox, support_bbox_expanded):
                     self.gt_occurrences[support_id][small_id] += 1
 
-    def build_final_gt(self) -> Dict[int, list[str]]:
+    def build_gt(self) -> Dict[int, list[str]]:
         """Формирует финальный GT после обработки всех кадров."""
         final_gt = {}
         for support_id, small_counts in self.gt_occurrences.items():

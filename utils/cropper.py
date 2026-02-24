@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from pathlib import Path
 from typing import List, Tuple
-from support_object_utils import expand_bbox
+from support_objects.support_object_utils import expand_bbox
 from config import PADDING_RATIO_MODEL, MASK_COLOR
 
 def save_crop(

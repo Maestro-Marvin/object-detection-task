@@ -2,12 +2,14 @@ import math
 import logging
 from pathlib import Path
 from config import *
-from data_loader import load_descriptions, load_frame_and_mask
-from support_object_utils import select_support_objects
-from cropper import save_crop
-from vlm_client import VLMClient
-from aggregator import *
-from gt_builder import GTBuilder
+from utils.data_loader import load_descriptions, load_frame_and_mask
+from support_objects.support_object_utils import select_support_objects
+from utils.cropper import save_crop
+from vlm.scene_understanding import SceneUnderstandingVLM
+from vlm.gt_refinement import GTRefinementVLM
+from evaluate.llm_evaluator import LlmEvaluator
+from utils.aggregator import *
+from utils.gt_builder import GTBuilder
 
 def setup_logging():
     logging.basicConfig(
@@ -50,30 +52,46 @@ def main():
 
 
         gt_builder.process_frame(mask, supports)
+    temp_gt = gt_builder.build_gt()
 
-    final_gt = gt_builder.build_final_gt()
-    save_final_gt(final_gt, GT_JSON)
-    logger.info(f"Ground truth saved to {GT_JSON}")
-    #'''
-    logger.info("Initializing VLM client...")
-    client = VLMClient()
+    logger.info("Initializing VLMs...")
+    vlm_task = SceneUnderstandingVLM()
+    vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
     final_result = {}
+    final_gt = {}
 
     for obj_id, crop_paths in object_crops.items():
         desc = descriptions.get(obj_id, f"object_{obj_id}")
         selected = get_uniform_crops(crop_paths)
-        logger.info(f"Querying VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        candidates = temp_gt[obj_id]
+        logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
 
         try:
-            response = client.query(selected, desc, obj_id)
+            response = vlm_task.query(selected, desc, obj_id)
             final_result[f"id_{obj_id}"] = response
         except Exception as e:
             final_result[f"id_{obj_id}"] = f"ERROR: {str(e)}"
+
+        logger.info(f"Querying refiner VLM for {obj_id}: {desc} ({len(selected)} crops)")
+
+        try:
+            response = vlm_refiner.query(selected, desc, obj_id, candidates)
+            final_gt[f"id_{obj_id}"] = response
+        except Exception as e:
+            final_gt[f"id_{obj_id}"] = f"ERROR: {str(e)}"
     
-    save_final_result(final_result, OUTPUT_JSON)
-    logger.info(f"Done! Results saved to {OUTPUT_JSON}")
-    #'''
+    save_result(final_result, PRED_JSON)
+    save_result(final_gt, GT_JSON)
+
+    logger.info("Running evaluation...")
+    evaluator = LlmEvaluator()
+    results = evaluator.evaluate_batch(final_gt, final_result)
+    save_result(results, REPORT_JSON)
+
+    logger.info("Calculating metrics...")
+    metrics = evaluator.calculate_metrics(results)
+    save_result(metrics, METRICS_JSON)
 
 if __name__ == "__main__":
     main()

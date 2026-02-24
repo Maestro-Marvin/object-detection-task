@@ -5,8 +5,10 @@ FRAMES_DIR = DATA_ROOT / "images"
 MASKS_DIR = DATA_ROOT / "render_instance_npy"
 DESC_PATH = DATA_ROOT / "gt_categories.json"
 CROPS_DIR = Path("crops")
-GT_JSON = Path("ground_truth.json")
-OUTPUT_JSON = Path("final_result.json")
+GT_JSON = Path("results/ground_truth.json")
+PRED_JSON = Path("results/predictions.json")
+REPORT_JSON = Path("results/report.json")
+METRICS_JSON = Path("results/metrics.json")
 
 SUPPORT_KEYWORDS = {
     "table", "bed", "shelf", "bookshelf", "shelves",
@@ -20,5 +22,6 @@ PADDING_RATIO_MODEL = 0.25
 MASK_COLOR = (128, 128, 128)
 FRAMES_SHARE = 0.5
 
-MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct-FP8"
+VLM_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct-FP8"
+LLM_MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507-FP8"
 MAX_CROPS_PER_REQUEST = 5
