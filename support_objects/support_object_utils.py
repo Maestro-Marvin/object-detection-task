@@ -1,6 +1,6 @@
 import numpy as np
 from typing import List, Dict, Tuple
-from config import SUPPORT_KEYWORDS, MIN_BBOX_RATIO
+from config import SUPPORT_KEYWORDS, MIN_BBOX_RATIO, BACKGROUND_ID
 
 def expand_bbox(bbox: Tuple[int, int, int, int], img_shape: Tuple[int, int], padding_ratio: float) -> Tuple[int, int, int, int]:
     H, W = img_shape
@@ -15,13 +15,6 @@ def expand_bbox(bbox: Tuple[int, int, int, int], img_shape: Tuple[int, int], pad
         min(H, y2 + pad_y)
     )
 
-def select_support_objects_scene(descriptions: Dict[int, str]) -> List[int]:
-    supports = []
-    for object_id, primary_synonym in descriptions.items():
-        if primary_synonym in SUPPORT_KEYWORDS:
-            supports.append(object_id)
-    return supports
-
 
 def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, str]) -> List[Dict]:
     """
@@ -35,7 +28,7 @@ def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, str])
         }
     """
     unique_ids = np.unique(scene_mask)
-    unique_ids = unique_ids[unique_ids != 0]
+    unique_ids = unique_ids[unique_ids != BACKGROUND_ID]
     supports = []
     for obj_id in unique_ids:
         desc = descriptions.get(obj_id, "").lower()

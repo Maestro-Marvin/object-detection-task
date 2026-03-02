@@ -23,6 +23,9 @@ def load_descriptions(json_path: Path) -> Dict[int, str]:
 def load_frame_and_mask(frame_name: str, frames_dir: Path, masks_dir: Path):
     rgb = np.array(Image.open(frames_dir / frame_name).convert("RGB"))
     mask_path = masks_dir / (frame_name.split(".")[0] + ".npy")
-    mask = np.load(mask_path)
+    try:
+        mask = np.load(mask_path)
+    except FileNotFoundError:
+        mask = None
     return rgb, mask
 

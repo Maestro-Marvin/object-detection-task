@@ -43,6 +43,8 @@ def main():
     for frame_name in frame_names:
         logger.info(f"Processing {frame_name}...")
         rgb, mask = load_frame_and_mask(frame_name, FRAMES_DIR, MASKS_DIR)
+        if mask is None:
+            continue
         supports = select_support_objects(mask, descriptions)
         support_ids = [obj["id"] for obj in supports]
 

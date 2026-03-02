@@ -1,5 +1,6 @@
 crops/
 data/
+scenes/
 pictures/
 results/
 *.log
