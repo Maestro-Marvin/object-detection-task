@@ -2,7 +2,6 @@ crops/
 data/
 scenes/
 pictures/
-results/
 *.log
 *.ipynb
 __pycache__

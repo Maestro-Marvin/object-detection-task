@@ -1,0 +1,133 @@
+[
+  {
+    "tp": [
+      "bottle - detergent bottle",
+      "cup - bathing mug",
+      "spray bottle - aerosol can",
+      "toothpaste - toothpaste"
+    ],
+    "fp": [
+      "ariel",
+      "dynamite",
+      "elvital",
+      "nivea men",
+      "toothbrush"
+    ],
+    "fn": [
+      "body wash bottle",
+      "brush",
+      "cleaner spray",
+      "cleaning product",
+      "cleaning sponge",
+      "conditioner bottle",
+      "shampoo bottle"
+    ],
+    "id": "id_110"
+  },
+  {
+    "tp": [
+      "laptop - computer",
+      "pillow - pillow"
+    ],
+    "fp": [
+      "blanket"
+    ],
+    "fn": [
+      "bed sheets",
+      "pillow"
+    ],
+    "id": "id_127"
+  },
+  {
+    "tp": [
+      "box - box"
+    ],
+    "fp": [
+      "microwave",
+      "pink lamp"
+    ],
+    "fn": [
+      "bowl"
+    ],
+    "id": "id_34"
+  },
+  {
+    "tp": [
+      "backpack - backpack",
+      "books - book",
+      "umbrella - umbrella"
+    ],
+    "fp": [
+      "bottle"
+    ],
+    "fn": [
+      "binder",
+      "case",
+      "clicker",
+      "desk fan",
+      "envelope",
+      "exercise book",
+      "flask",
+      "router"
+    ],
+    "id": "id_67"
+  },
+  {
+    "tp": [
+      "socket - plug socket"
+    ],
+    "fp": [],
+    "fn": [],
+    "id": "id_70"
+  },
+  {
+    "tp": [
+      "pot - cooking pot",
+      "shoes - athletic shoes",
+      "sink - kitchen countertop"
+    ],
+    "fp": [
+      "stove"
+    ],
+    "fn": [
+      "coaster",
+      "coffee powder",
+      "condiments bottle",
+      "container",
+      "dish soap",
+      "faucet",
+      "hand cleanser",
+      "lemon bottle"
+    ],
+    "id": "id_71"
+  },
+  {
+    "tp": [
+      "box - box",
+      "jacket - coat"
+    ],
+    "fp": [
+      "bowl",
+      "plates",
+      "toiletries"
+    ],
+    "fn": [
+      "aerosol canister",
+      "body lotion dispenser",
+      "hand cream tube"
+    ],
+    "id": "id_73"
+  },
+  {
+    "tp": [
+      "box - box",
+      "microwave - microwave"
+    ],
+    "fp": [
+      "blue helmet",
+      "wiring"
+    ],
+    "fn": [],
+    "id": "id_90"
+  }
+]
