@@ -1,6 +1,6 @@
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 from collections import defaultdict
 from config import FRAMES_SHARE, PADDING_RATIO_GT
 from support_objects.support_object_utils import expand_bbox
@@ -12,14 +12,13 @@ def is_bbox_inside(inner: Tuple[int, int, int, int], outer: Tuple[int, int, int,
     return x1_out <= x1_in and y1_out <= y1_in and x2_in <= x2_out and y2_in <= y2_out
 
 class GTBuilder:
-    def __init__(self, descriptions: Dict[int, str], threshold: float = FRAMES_SHARE):
+    def __init__(self, descriptions: Dict[int, List[str]], threshold: float = FRAMES_SHARE):
         self.descriptions = descriptions
         self.threshold = threshold
         self.gt_occurrences = defaultdict(lambda: defaultdict(int))  # support_id → small_id → count
         self.total_frames = defaultdict(int)
 
     def process_frame(self, mask: np.ndarray, supports: list[dict]):
-        """Обрабатывает один кадр и обновляет внутренние счётчики."""
 
         # Строим bbox для всех объектов на кадре
         all_ids = np.unique(mask)
@@ -45,7 +44,6 @@ class GTBuilder:
                     self.gt_occurrences[support_id][small_id] += 1
 
     def build_gt(self) -> Dict[int, list[str]]:
-        """Формирует финальный GT после обработки всех кадров."""
         final_gt = {}
         for support_id, small_counts in self.gt_occurrences.items():
             total = self.total_frames[support_id]
@@ -55,6 +53,7 @@ class GTBuilder:
             ]
             if stable_small_ids:
                 final_gt[support_id] = [
-                    self.descriptions[sid] for sid in stable_small_ids if self.descriptions[sid] != f"unknown_{sid}"
+                    self.descriptions[sid][0] if self.descriptions[sid][0] != "bottle" else self.descriptions[sid][1]
+                    for sid in stable_small_ids if sid in self.descriptions
                 ]
         return final_gt

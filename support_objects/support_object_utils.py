@@ -16,7 +16,7 @@ def expand_bbox(bbox: Tuple[int, int, int, int], img_shape: Tuple[int, int], pad
     )
 
 
-def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, str]) -> List[Dict]:
+def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, List[str]]) -> List[Dict]:
     """
     Отбирает опорные объекты на основе семантики и размера bbox
 
@@ -31,8 +31,8 @@ def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, str])
     unique_ids = unique_ids[unique_ids != BACKGROUND_ID]
     supports = []
     for obj_id in unique_ids:
-        desc = descriptions.get(obj_id, "").lower()
-        if not any(kw == desc for kw in SUPPORT_KEYWORDS):
+        desc = descriptions.get(obj_id, "")
+        if not any(kw in desc for kw in SUPPORT_KEYWORDS):
             continue
         ys, xs = np.where(scene_mask == obj_id)
         if xs.size == 0:
@@ -46,7 +46,7 @@ def select_support_objects(scene_mask: np.ndarray, descriptions: Dict[int, str])
             continue
         supports.append({
             "id": int(obj_id),
-            "description": descriptions[obj_id],
+            "description": descriptions[obj_id][0],
             "bbox": (int(x_min), int(y_min), int(x_max), int(y_max))
         })
     return supports

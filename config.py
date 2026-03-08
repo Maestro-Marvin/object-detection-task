@@ -9,20 +9,22 @@ GT_JSON = Path("results/ground_truth.json")
 PRED_JSON = Path("results/predictions.json")
 REPORT_JSON = Path("results/report.json")
 METRICS_JSON = Path("results/metrics.json")
+TEMP_GT_JSON = Path("results/temp_gt.json")
 
 SUPPORT_KEYWORDS = {
     "table", "bed", "shelf", "bookshelf", "shelves",
     "floor", "countertop", "cabinets",
-    "drawers", "container"
+    "drawers"
 }
 
-MIN_BBOX_RATIO = 0.025
+MIN_BBOX_RATIO = 0.05
 PADDING_RATIO_GT = 0.5
 PADDING_RATIO_MODEL = 0.25
 MASK_COLOR = (128, 128, 128)
 BACKGROUND_ID = -100
 FRAMES_SHARE = 0.5
+SIMILARITY_THRESHOLD = 0.65
 
-VLM_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct-FP8"
-LLM_MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507-FP8"
+VLM_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
+EMBED_MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 MAX_CROPS_PER_REQUEST = 5

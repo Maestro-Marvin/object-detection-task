@@ -1,5 +1,8 @@
 import math
 import logging
+import json
+import torch
+import gc
 from pathlib import Path
 from config import *
 from utils.data_loader import load_descriptions, load_frame_and_mask
@@ -7,7 +10,8 @@ from support_objects.support_object_utils import select_support_objects
 from utils.cropper import save_crop
 from vlm.scene_understanding import SceneUnderstandingVLM
 from vlm.gt_refinement import GTRefinementVLM
-from evaluate.llm_evaluator import LlmEvaluator
+from evaluate.evaluator import Evaluator
+from evaluate.calculate_metrics import calculate_metrics
 from utils.aggregator import *
 from utils.gt_builder import GTBuilder
 
@@ -16,7 +20,6 @@ def setup_logging():
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[
-            logging.FileHandler("pipeline.log", encoding="utf-8"),
             logging.StreamHandler()
         ]
     )
@@ -31,11 +34,11 @@ def get_uniform_crops(crops : list[Path]):
 def main():
     setup_logging()
     logger = logging.getLogger(__name__)
-
+    
     CROPS_DIR.mkdir(exist_ok=True)
     logger.info("Loading object descriptions...")
     descriptions = load_descriptions(DESC_PATH)
-
+    
     frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
     logger.info(f"Processing {len(frame_names)} frames...")
 
@@ -52,10 +55,14 @@ def main():
         for obj in supports:
             save_crop(rgb, mask, obj["bbox"], obj["id"], support_ids, frame_id, CROPS_DIR)
 
-
         gt_builder.process_frame(mask, supports)
     temp_gt = gt_builder.build_gt()
-
+    save_result(temp_gt, TEMP_GT_JSON)
+    
+    with open(TEMP_GT_JSON, "r", encoding="utf-8") as f:
+        temp_gt = json.load(f)
+        temp_gt = {int(k) if k.isdigit() else k: v for k, v in temp_gt.items()}
+        
     logger.info("Initializing VLMs...")
     vlm_task = SceneUnderstandingVLM()
     vlm_refiner = GTRefinementVLM()
@@ -64,9 +71,9 @@ def main():
     final_gt = {}
 
     for obj_id, crop_paths in object_crops.items():
-        desc = descriptions.get(obj_id, f"object_{obj_id}")
+        desc = descriptions[obj_id][0]
         selected = get_uniform_crops(crop_paths)
-        candidates = temp_gt[obj_id]
+        candidates = temp_gt.get(obj_id, [])
         logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
 
         try:
@@ -85,14 +92,26 @@ def main():
     
     save_result(final_result, PRED_JSON)
     save_result(final_gt, GT_JSON)
+    
+    del vlm_task
+    del vlm_refiner
+    gc.collect()
+    torch.cuda.empty_cache()
+
+    with open(PRED_JSON, "r", encoding="utf-8") as f:
+        final_result = json.load(f)
+        final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}
+    with open(GT_JSON, "r", encoding="utf-8") as f:
+        final_gt = json.load(f)
+        final_gt = {int(k) if k.isdigit() else k: v for k, v in final_gt.items()}
 
     logger.info("Running evaluation...")
-    evaluator = LlmEvaluator()
-    results = evaluator.evaluate_batch(final_gt, final_result)
+    evaluator = Evaluator(descriptions)
+    results = evaluator.evaluate(final_result, final_gt)
     save_result(results, REPORT_JSON)
 
     logger.info("Calculating metrics...")
-    metrics = evaluator.calculate_metrics(results)
+    metrics = calculate_metrics(results)
     save_result(metrics, METRICS_JSON)
 
 if __name__ == "__main__":

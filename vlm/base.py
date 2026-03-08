@@ -17,7 +17,7 @@ class VLMClient(ABC):
             enforce_eager=True,
             limit_mm_per_prompt={"image": MAX_CROPS_PER_REQUEST},
             gpu_memory_utilization = 0.3,
-            max_model_len = 65536,
+            max_model_len = 32768,
         )
         self.sampling_params = SamplingParams(max_tokens=1024, temperature=0.0)
 
