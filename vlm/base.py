@@ -5,10 +5,10 @@ from qwen_vl_utils import process_vision_info
 from PIL import Image
 from pathlib import Path
 from typing import List
-from config import VLM_MODEL_NAME, MAX_CROPS_PER_REQUEST
+from config import TASK_MODEL_NAME, MAX_CROPS_PER_REQUEST
 
 class VLMClient(ABC):
-    def __init__(self, model_name: str = VLM_MODEL_NAME):
+    def __init__(self, model_name: str = TASK_MODEL_NAME):
         self.processor = AutoProcessor.from_pretrained(model_name)
 
         self.llm = LLM(

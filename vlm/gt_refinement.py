@@ -11,33 +11,41 @@ class GTRefinementVLM(VLMClient):
         candidates_str = ", ".join(candidates)
         prompt_text = f"""You are an expert in spatial scene understanding. You are shown {len(image_paths)} recent views of the same object - '{description}' (ID: {obj_id}).
 
-        Below is a list of candidate items that might be associated with this object:
-        Candidates: [{candidates_str}]
-
-        Your task: determine which of these candidates are **truly present and correctly associated** with the target object.
-
+        ### YOUR TASK:
+        Identify ALL clearly visible items that have a DIRECT spatial relationship with the target object.
         For each valid item, assign the correct preposition:
         - 'on' if it's placed ON TOP of a surface (e.g., lamp on desk),
         - 'inside' if it's physically INSIDE a container (e.g., book inside cabinet),
         - 'near' if it's NEXT TO or BESIDE the object (e.g., slippers near bed).
+        
+        ### REFERENCE CANDIDATES (AUXILIARY):
+        Below is a list of items that MIGHT be associated with this object. Use it as a helpful hint, NOT as a strict constraint:
+        Candidates: [{candidates_str}]
 
-        Note: Gray regions (#808080) belong to other support objects — ignore them completely.
+        ### IMPORTANT:
+        - If you see an item NOT in the list but clearly visible → INCLUDE it.
+        - If an item IS in the list but NOT visible or wrongly associated → EXCLUDE it.
+        - The candidate list is a suggestion, not a ground truth.
 
-        Rules:
-        - ONLY include items from the candidate list.
+        ### MASKING INSTRUCTION:
+        IMPORTANT: Bright magenta areas (#FF00FF) are MASKED regions belonging to OTHER objects.
+        - COMPLETELY IGNORE these areas.
+        - Do NOT describe or identify anything within magenta regions.
+        - Focus only on the central reference object and items directly on/near it.
+
+        ### OUTPUT RULES:
         - NEVER include the main object itself ('{description}').
-        - Group by preposition.
+        - Group items by preposition.
         - Output format: '[item1, item2] on {description} id={obj_id}; [item3] inside {description} id={obj_id}; ...'
-        - If NO candidates are valid, output exactly: 'none'
-        - Use lowercase English words, no quotes, no extra punctuation.
+        - If NO related items are visible, output exactly: 'none'
         - Return ONLY the string. No explanations, no JSON, no markdown.
 
-        Examples of GOOD output:
+        ### EXAMPLES OF GOOD OUTPUT:
         [lamp, notebook] on desk id=42
-        [shampoo] inside cabinet id=70; [slippers] near cabinet id=70
+        [shampoo bottle] inside cabinet id=70; [slippers] near cabinet id=70
+        [smartphone, keys, pen] on table id=15
         none
 
         Now analyze the images and return your answer."""
-
 
         return self._run_inference(image_paths, prompt_text)

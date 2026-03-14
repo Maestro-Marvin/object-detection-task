@@ -1,0 +1,49 @@
+{
+  "90": [
+    "crops/90/frame_002530.jpg",
+    "crops/90/frame_002560.jpg",
+    "crops/90/frame_002590.jpg",
+    "crops/90/frame_002650.jpg"
+  ],
+  "127": [
+    "crops/127/frame_001410.jpg",
+    "crops/127/frame_001860.jpg",
+    "crops/127/frame_003150.jpg",
+    "crops/127/frame_008560.jpg"
+  ],
+  "67": [
+    "crops/67/frame_000780.jpg",
+    "crops/67/frame_002220.jpg",
+    "crops/67/frame_008570.jpg"
+  ],
+  "34": [
+    "crops/34/frame_001340.jpg",
+    "crops/34/frame_002940.jpg",
+    "crops/34/frame_003070.jpg",
+    "crops/34/frame_008550.jpg",
+    "crops/34/frame_008570.jpg"
+  ],
+  "110": [
+    "crops/110/frame_005530.jpg",
+    "crops/110/frame_005840.jpg",
+    "crops/110/frame_006340.jpg",
+    "crops/110/frame_006580.jpg"
+  ],
+  "73": [
+    "crops/73/frame_001860.jpg",
+    "crops/73/frame_003700.jpg",
+    "crops/73/frame_003740.jpg"
+  ],
+  "70": [
+    "crops/70/frame_003900.jpg",
+    "crops/70/frame_004460.jpg",
+    "crops/70/frame_008190.jpg",
+    "crops/70/frame_008360.jpg"
+  ],
+  "71": [
+    "crops/71/frame_002030.jpg",
+    "crops/71/frame_004200.jpg",
+    "crops/71/frame_008160.jpg",
+    "crops/71/frame_008380.jpg"
+  ]
+}

@@ -1,70 +1,64 @@
 [
   {
     "tp": [
-      "bottle - detergent bottle",
-      "cup - bathing mug",
-      "spray bottle - aerosol can",
-      "toothpaste - toothpaste"
+      "brush - brush",
+      "conditioner bottle - conditioner bottle",
+      "hair wash bottle - body wash bottle",
+      "laundry detergent bottle - detergent bottle",
+      "shampoo bottle - shampoo bottle",
+      "sponge - cleaning sponge",
+      "spray bottle - cleaner spray"
     ],
     "fp": [
-      "ariel",
-      "dynamite",
-      "elvital",
-      "nivea men",
-      "toothbrush"
+      "measuring cup",
+      "small bottle"
     ],
     "fn": [
-      "body wash bottle",
-      "brush",
-      "cleaner spray",
-      "cleaning product",
-      "cleaning sponge",
-      "conditioner bottle",
-      "shampoo bottle"
+      "bathing mug"
     ],
     "id": "id_110"
   },
   {
     "tp": [
-      "laptop - computer",
+      "laptop - laptop",
       "pillow - pillow"
     ],
     "fp": [
-      "blanket"
+      "blanket",
+      "earbuds"
     ],
     "fn": [
       "bed sheets",
-      "pillow"
+      "computer mouse"
     ],
     "id": "id_127"
   },
   {
-    "tp": [
-      "box - box"
-    ],
+    "tp": [],
     "fp": [
-      "microwave",
-      "pink lamp"
+      "lamp",
+      "microwave"
     ],
     "fn": [
-      "bowl"
+      "bowl",
+      "box"
     ],
     "id": "id_34"
   },
   {
     "tp": [
       "backpack - backpack",
-      "books - book",
-      "umbrella - umbrella"
+      "mouse - clicker"
     ],
     "fp": [
-      "bottle"
+      "cables",
+      "fan",
+      "papers",
+      "water bottle"
     ],
     "fn": [
       "binder",
-      "case",
-      "clicker",
-      "desk fan",
+      "book",
       "envelope",
       "exercise book",
       "flask",
@@ -74,46 +68,46 @@
   },
   {
     "tp": [
-      "socket - plug socket"
+      "electrical outlet - plug socket"
     ],
-    "fp": [],
+    "fp": [
+      "towel"
+    ],
     "fn": [],
     "id": "id_70"
   },
   {
     "tp": [
-      "pot - cooking pot",
-      "shoes - athletic shoes",
       "sink - kitchen countertop"
     ],
     "fp": [
       "stove"
     ],
-    "fn": [
-      "coaster",
-      "coffee powder",
-      "condiments bottle",
-      "container",
-      "dish soap",
-      "faucet",
-      "hand cleanser",
-      "lemon bottle"
-    ],
+    "fn": [],
     "id": "id_71"
   },
   {
     "tp": [
-      "box - box",
-      "jacket - coat"
+      "bottle - orange bottle",
+      "bowl - bowl",
+      "calculator - calculator",
+      "glass jar - glass jar",
+      "headphones - headphones",
+      "jacket - coat",
+      "lotion bottle - body lotion dispenser",
+      "plate - plates",
+      "smartphone - smartphone",
+      "spray can - aerosol canister",
+      "watch - smartwatch"
     ],
     "fp": [
-      "bowl",
-      "plates",
-      "toiletries"
+      "none",
+      "shampoo bottle",
+      "tissue box"
     ],
     "fn": [
-      "aerosol canister",
-      "body lotion dispenser",
+      "book",
+      "box",
       "hand cream tube"
     ],
     "id": "id_73"
@@ -124,8 +118,7 @@
       "microwave - microwave"
     ],
     "fp": [
-      "blue helmet",
-      "wiring"
+      "blue helmet"
     ],
     "fn": [],
     "id": "id_90"

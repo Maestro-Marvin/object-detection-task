@@ -10,6 +10,7 @@ PRED_JSON = Path("results/predictions.json")
 REPORT_JSON = Path("results/report.json")
 METRICS_JSON = Path("results/metrics.json")
 TEMP_GT_JSON = Path("results/temp_gt.json")
+SELECTED_CROPS = Path("results/selected_crops.json")
 
 SUPPORT_KEYWORDS = {
     "table", "bed", "shelf", "bookshelf", "shelves",
@@ -18,13 +19,14 @@ SUPPORT_KEYWORDS = {
 }
 
 MIN_BBOX_RATIO = 0.05
-PADDING_RATIO_GT = 0.5
-PADDING_RATIO_MODEL = 0.25
-MASK_COLOR = (128, 128, 128)
+PADDING_RATIO_GT = 0.25
+PADDING_RATIO_MODEL = 0.1
+MASK_COLOR = (255, 0, 255)
 BACKGROUND_ID = -100
 FRAMES_SHARE = 0.5
 SIMILARITY_THRESHOLD = 0.65
 
-VLM_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
+TASK_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
+SELECTOR_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
 EMBED_MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 MAX_CROPS_PER_REQUEST = 5
