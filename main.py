@@ -72,7 +72,7 @@ def main():
         selected_crops_cache = {}
 
     logger.info("Initializing VLMs...")
-    vlm_selector = CropSelectorVLM()
+    #vlm_selector = CropSelectorVLM()
     vlm_task = SceneUnderstandingVLM()
     vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
@@ -118,10 +118,10 @@ def main():
 
     del vlm_task
     del vlm_refiner
-    del vlm_selector
+    #del vlm_selector
     gc.collect()
     torch.cuda.empty_cache()
-
+    
     with open(PRED_JSON, "r", encoding="utf-8") as f:
         final_result = json.load(f)
         final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}

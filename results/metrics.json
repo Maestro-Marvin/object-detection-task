@@ -1,8 +1,8 @@
 {
-  "Precision": 0.619,
-  "Recall": 0.65,
-  "F1": 0.6341,
-  "Total_TP": 26,
-  "Total_FP": 16,
+  "Precision": 0.6944,
+  "Recall": 0.641,
+  "F1": 0.6667,
+  "Total_TP": 25,
+  "Total_FP": 11,
   "Total_FN": 14
 }

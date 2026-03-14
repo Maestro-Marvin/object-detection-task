@@ -1,10 +1,10 @@
 {
   "id_90": "[box] inside drawers id=90; [microwave] on drawers id=90",
-  "id_127": "[laptop, pillow, bed sheets, computer mouse] on bed id=127",
-  "id_67": "[backpack] inside shelves id=67; [flask] on shelves id=67; [router] on shelves id=67; [exercise book] on shelves id=67; [binder] on shelves id=67; [envelope] on shelves id=67; [clicker] on shelves id=67; [book] on shelves id=67",
-  "id_34": "[bowl] on shelf id=34; [box] inside shelf id=34",
+  "id_127": "[computer, pillow, bed sheets] on bed id=127",
+  "id_67": "[backpack, router, exercise book, flask, desk fan] on shelves id=67; [binder, case, book] inside shelves id=67",
+  "id_34": "[desk lamp, microwave] on shelf id=34; [box] inside shelf id=34",
   "id_110": "[detergent bottle, cleaner spray, bathing mug, cleaning sponge, brush, body wash bottle, conditioner bottle, shampoo bottle] on bathroom shelves id=110",
-  "id_73": "[hand cream tube, body lotion dispenser, aerosol canister, box, calculator, smartphone, headphones, book, glass jar, orange bottle, smartwatch, bowl, plates] on bookshelf id=73; [coat] near bookshelf id=73",
+  "id_73": "[hand cream tube, body lotion dispenser, aerosol canister, box, calculator, smartphone, glass jar, orange bottle, book, smartwatch, bowl, plates] on bookshelf id=73; [coat] near bookshelf id=73",
   "id_70": "[plug socket] on cabinet id=70",
   "id_71": "[kitchen countertop] on cabinets id=71"
 }

@@ -7,9 +7,11 @@
     "router",
     "binder",
     "case",
+    "desk lamp",
     "exercise book",
     "clicker",
     "flask",
+    "desk fan",
     "book"
   ],
   "70": [
@@ -20,24 +22,36 @@
     "coaster",
     "container",
     "lemon bottle",
+    "condiments bottle",
+    "athletic shoes",
     "container",
     "coffee powder",
     "kitchen countertop",
-    "cooking pot"
+    "faucet",
+    "cooking pot",
+    "hand cleanser",
+    "dish soap"
   ],
   "127": [
-    "camera",
-    "bed sheets",
     "digital watch",
+    "container",
+    "camera",
+    "pillow",
+    "bed sheets",
+    "pillow",
     "computer",
-    "case"
+    "pillow",
+    "case",
+    "shelf"
   ],
   "73": [
     "coat",
     "button up shirt",
+    "button up shirt",
     "clothing",
     "wall",
     "container",
+    "box",
     "wall",
     "hand cream tube",
     "body lotion dispenser",
@@ -45,14 +59,18 @@
     "box"
   ],
   "34": [
+    "bed sheets",
     "box",
+    "desk lamp",
     "drawers",
+    "microwave",
     "box",
     "bowl"
   ],
   "90": [
     "box",
-    "bowl"
+    "bowl",
+    "microwave"
   ],
   "110": [
     "toothpaste",
