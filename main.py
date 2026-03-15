@@ -43,7 +43,7 @@ def main():
     
     frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
     logger.info(f"Processing {len(frame_names)} frames...")
-
+    """
     gt_builder = GTBuilder(descriptions)
     for frame_name in frame_names:
         logger.info(f"Processing {frame_name}...")
@@ -60,11 +60,11 @@ def main():
         gt_builder.process_frame(mask, supports)
     temp_gt = gt_builder.build_gt()
     save_result(temp_gt, TEMP_GT_JSON)
-    
+    """
     with open(TEMP_GT_JSON, "r", encoding="utf-8") as f:
         temp_gt = json.load(f)
         temp_gt = {int(k) if k.isdigit() else k: v for k, v in temp_gt.items()}
-
+    
     try:
         with open(SELECTED_CROPS, "r", encoding="utf-8") as f:
             selected_crops_cache = json.load(f)
@@ -74,7 +74,7 @@ def main():
     logger.info("Initializing VLMs...")
     #vlm_selector = CropSelectorVLM()
     vlm_task = SceneUnderstandingVLM()
-    vlm_refiner = GTRefinementVLM()
+    #vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
     final_result = {}
     final_gt = {}
@@ -113,11 +113,11 @@ def main():
             final_gt[f"id_{obj_id}"] = f"ERROR: {str(e)}"
     
     
-    save_result(final_gt, GT_JSON)
+    #save_result(final_gt, GT_JSON)
     save_result(final_result, PRED_JSON)
 
     del vlm_task
-    del vlm_refiner
+    #del vlm_refiner
     #del vlm_selector
     gc.collect()
     torch.cuda.empty_cache()

@@ -1,10 +1,10 @@
 {
-  "id_90": "[microwave] on drawers id=90; [box, helmet] inside drawers id=90; [wiring] near drawers id=90",
-  "id_127": "[laptop, pillow, blanket, earbuds] on bed id=127",
-  "id_67": "[backpack] inside shelves id=67; [water bottle, fan, mouse, cables, magazine] on shelves id=67",
-  "id_34": "[lamp, microwave] on shelf id=34\n[book] inside shelf id=34",
-  "id_110": "[laundry detergent bottle, small white bottle] on bathroom shelves id=110; [shampoo bottle, conditioner bottle, face wash bottle] on bathroom shelves id=110; [spray bottle, measuring cup, brush, sponge] near bathroom shelves id=110",
-  "id_73": "[shampoo bottle, smartphone, jar, plate, charger] on bookshelf id=73; [book] inside bookshelf id=73",
-  "id_70": "[electrical outlet] on cabinet id=70; [cutting board] near cabinet id=70",
-  "id_71": "[stove, sink] on cabinets id=71"
+  "id_90": "[cardboard box] inside drawers id=90; [blue object] inside drawers id=90; [microwave] on drawers id=90; [wire basket] near drawers id=90",
+  "id_127": "[quilt, laptop, pillow, mouse] on bed id=127; [pillow] inside bed id=127",
+  "id_67": "[backpack] inside shelves id=67; [water bottle] on shelves id=67; [fan] on shelves id=67",
+  "id_34": "[shelf, microwave, lamp] near shelf id=34",
+  "id_110": "[laundry detergent bottle, small white bottle] on bathroom shelves id=110; [shampoo bottle, orange bottle, black bottle] on bathroom shelves id=110; [spray bottle, measuring cup, brush, sponge] near bathroom shelves id=110",
+  "id_73": "[smartphone, calculator] on bookshelf id=73; [book, tissue box, bowl, plates] inside bookshelf id=73; [pillow] near bookshelf id=73",
+  "id_70": "[wall outlet] on cabinet id=70; [wooden cutting board] near cabinet id=70",
+  "id_71": "[spice jar, bottle, container] on cabinets id=71; [spice jar, bottle, container] near cabinets id=71"
 }
