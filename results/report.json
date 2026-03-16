@@ -5,27 +5,31 @@
       "conditioner bottle - conditioner bottle",
       "face wash bottle - body wash bottle",
       "laundry detergent bottle - detergent bottle",
-      "measuring cup - bathing mug",
       "shampoo bottle - shampoo bottle",
       "sponge - cleaning sponge",
       "spray bottle - cleaner spray"
     ],
     "fp": [
+      "measuring cup",
       "small white bottle"
     ],
-    "fn": [],
+    "fn": [
+      "bathing mug"
+    ],
     "id": "id_110"
   },
   {
     "tp": [
-      "blanket - bed sheets",
       "laptop - computer",
       "pillow - pillow"
     ],
     "fp": [
+      "blanket",
       "earbuds"
     ],
-    "fn": [],
+    "fn": [
+      "bed sheets"
+    ],
     "id": "id_127"
   },
   {
@@ -44,16 +48,17 @@
   {
     "tp": [
       "backpack - backpack",
-      "fan - desk fan",
-      "magazine - book"
+      "fan - desk fan"
     ],
     "fp": [
       "cables",
+      "magazine",
       "mouse",
       "water bottle"
     ],
     "fn": [
       "binder",
+      "book",
       "case",
       "exercise book",
       "flask",
