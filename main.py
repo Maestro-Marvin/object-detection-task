@@ -74,7 +74,7 @@ def main():
     logger.info("Initializing VLMs...")
     #vlm_selector = CropSelectorVLM()
     vlm_task = SceneUnderstandingVLM()
-    #vlm_refiner = GTRefinementVLM()
+    vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
     final_result = {}
     final_gt = {}
@@ -113,11 +113,11 @@ def main():
             final_gt[f"id_{obj_id}"] = f"ERROR: {str(e)}"
     
     
-    #save_result(final_gt, GT_JSON)
+    save_result(final_gt, GT_JSON)
     save_result(final_result, PRED_JSON)
 
     del vlm_task
-    #del vlm_refiner
+    del vlm_refiner
     #del vlm_selector
     gc.collect()
     torch.cuda.empty_cache()

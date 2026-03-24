@@ -1,49 +1,59 @@
 {
-  "90": [
-    "crops/90/frame_002530.jpg",
-    "crops/90/frame_002560.jpg",
-    "crops/90/frame_002590.jpg",
-    "crops/90/frame_002650.jpg"
+  "79": [
+    "crops/79/frame_004030.jpg",
+    "crops/79/frame_004250.jpg",
+    "crops/79/frame_010260.jpg",
+    "crops/79/frame_013510.jpg"
   ],
-  "127": [
-    "crops/127/frame_001410.jpg",
-    "crops/127/frame_001860.jpg",
-    "crops/127/frame_003150.jpg",
-    "crops/127/frame_008560.jpg"
+  "107": [
+    "crops/107/frame_007100.jpg",
+    "crops/107/frame_013660.jpg",
+    "crops/107/frame_013780.jpg"
   ],
-  "67": [
-    "crops/67/frame_000780.jpg",
-    "crops/67/frame_002220.jpg",
-    "crops/67/frame_008570.jpg"
+  "16": [
+    "crops/16/frame_004390.jpg",
+    "crops/16/frame_004780.jpg",
+    "crops/16/frame_005100.jpg",
+    "crops/16/frame_013470.jpg",
+    "crops/16/frame_013500.jpg"
   ],
-  "34": [
-    "crops/34/frame_001340.jpg",
-    "crops/34/frame_002940.jpg",
-    "crops/34/frame_003070.jpg",
-    "crops/34/frame_008550.jpg",
-    "crops/34/frame_008570.jpg"
+  "125": [
+    "crops/125/frame_009450.jpg",
+    "crops/125/frame_009490.jpg",
+    "crops/125/frame_009530.jpg",
+    "crops/125/frame_009570.jpg",
+    "crops/125/frame_009600.jpg"
+  ],
+  "117": [
+    "crops/117/frame_008410.jpg",
+    "crops/117/frame_009050.jpg",
+    "crops/117/frame_009690.jpg",
+    "crops/117/frame_013630.jpg"
   ],
   "110": [
-    "crops/110/frame_005530.jpg",
-    "crops/110/frame_005840.jpg",
-    "crops/110/frame_006340.jpg",
-    "crops/110/frame_006580.jpg"
+    "crops/110/frame_007120.jpg",
+    "crops/110/frame_007260.jpg",
+    "crops/110/frame_013690.jpg",
+    "crops/110/frame_013740.jpg",
+    "crops/110/frame_013780.jpg"
   ],
-  "73": [
-    "crops/73/frame_001860.jpg",
-    "crops/73/frame_003700.jpg",
-    "crops/73/frame_003740.jpg"
+  "15": [
+    "crops/15/frame_001570.jpg",
+    "crops/15/frame_003690.jpg",
+    "crops/15/frame_010450.jpg"
   ],
-  "70": [
-    "crops/70/frame_003900.jpg",
-    "crops/70/frame_004460.jpg",
-    "crops/70/frame_008190.jpg",
-    "crops/70/frame_008360.jpg"
+  "96": [
+    "crops/96/frame_002160.jpg",
+    "crops/96/frame_002180.jpg",
+    "crops/96/frame_002200.jpg",
+    "crops/96/frame_002240.jpg",
+    "crops/96/frame_002250.jpg"
   ],
-  "71": [
-    "crops/71/frame_002030.jpg",
-    "crops/71/frame_004200.jpg",
-    "crops/71/frame_008160.jpg",
-    "crops/71/frame_008380.jpg"
+  "41": [
+    "crops/41/frame_004930.jpg",
+    "crops/41/frame_005570.jpg",
+    "crops/41/frame_006260.jpg",
+    "crops/41/frame_006360.jpg",
+    "crops/41/frame_013300.jpg"
   ]
 }
