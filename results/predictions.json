@@ -1,11 +1,11 @@
 {
-  "id_79": "[apple laptop, earphones] on bed id=79; [pillow] near bed id=79",
-  "id_107": "[light] on cabinets id=107; [container, bottle] inside cabinets id=107",
-  "id_16": "[backpack, basket, notebook, pen, pouch, tablet] on bench id=16",
-  "id_125": "[container, bubble wrap] on counter id=125; [jar] near counter id=125",
-  "id_117": "[roll of paper towels, jar, bag, container, can] on bar cart id=117; [kettle, bag] inside bar cart id=117",
-  "id_110": "[water bottle, dish soap bottle, faucet] on counter id=110; [stove] near counter id=110",
-  "id_15": "[chair, keyboard, laptop, controller, mouse, mousepad, power strip, power adapter, power cord, tissue box, container, pen holder, box, camera, book, power outlet] near desk id=15",
-  "id_96": "[box] on box with lid id=96",
-  "id_41": "[shampoo bottle, jar, wallet, tissue box, comb, pouch, paper, can] on clothes rack id=41; [clothing, pillow, blanket] near clothes rack id=41; [basket] inside clothes rack id=41"
+  "id_79": "[laptop, earphones] on bed id=79; [pillow, blanket, books] near bed id=79",
+  "id_107": "none",
+  "id_16": "[backpack, notebook, pen, tablet, laundry basket] on bench id=16",
+  "id_125": "[bottle, container, bubble wrap] on counter id=125",
+  "id_117": "[onion, garlic, plastic bag, bottle, bag] on bar cart id=117; [paper towel, jar, thermos, bag] near bar cart id=117",
+  "id_110": "[stove, sink, bottle, dish soap, faucet] on counter id=110",
+  "id_15": "[laptop, keyboard, mouse, game controller, mouse pad, power strip, chair] on desk id=15",
+  "id_96": "none",
+  "id_41": "[blue backpack, red suitcase, black suitcase, laundry basket] near clothes rack id=41\n[blue backpack, red suitcase, black suitcase] on floor id=41\n[blue backpack, red suitcase, black suitcase] near clothes rack id=41\n[blue backpack, red suitcase, black suitcase] on floor id=41\n[blue backpack, red suitcase, black suitcase] near clothes rack id=41"
 }

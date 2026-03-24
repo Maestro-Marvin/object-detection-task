@@ -1,11 +1,7 @@
 [
   {
     "tp": [],
-    "fp": [
-      "bottle",
-      "container",
-      "light"
-    ],
+    "fp": [],
     "fn": [
       "electrical outlet"
     ],
@@ -13,16 +9,16 @@
   },
   {
     "tp": [
+      "bottle - glass bottle",
       "faucet - basin spout",
-      "water bottle - glass bottle"
+      "sink - basin"
     ],
     "fp": [
-      "dish soap bottle",
+      "dish soap",
       "stove"
     ],
     "fn": [
       "backsplash",
-      "basin",
       "electrical outlet"
     ],
     "id": "id_110"
@@ -31,75 +27,68 @@
     "tp": [
       "bag - bag",
       "bag - bag",
-      "can - bottle cap",
-      "container - box",
-      "jar - air tight container",
-      "kettle - electric kettle",
-      "roll of paper towels - kitchen roll"
+      "bottle - alcohol",
+      "garlic - fresh garlic",
+      "jar - bottle cap",
+      "onion - onion",
+      "paper towel - kitchen roll"
     ],
-    "fp": [],
+    "fp": [
+      "plastic bag",
+      "thermos"
+    ],
     "fn": [
       "air tight container",
       "alcohol",
       "aluminium tin",
-      "digestion aid",
-      "fresh garlic",
-      "ginger",
-      "onion"
+      "box",
+      "electric kettle",
+      "ginger"
     ],
     "id": "id_117"
   },
   {
-    "tp": [
-      "bubble wrap - bubble wrap",
-      "container - container",
-      "jar - jar"
+    "tp": [],
+    "fp": [
+      "bottle",
+      "bubble wrap",
+      "container"
     ],
-    "fp": [],
     "fn": [
-      "remote control"
+      "digestion aid"
     ],
     "id": "id_125"
   },
   {
     "tp": [
       "chair - chair",
-      "controller - controller",
       "keyboard - bluetooth keyboard",
       "laptop - laptop",
       "mouse - bluetooth mouse"
     ],
     "fp": [
-      "book",
-      "box",
-      "camera",
-      "container",
-      "mousepad",
-      "pen holder",
-      "power adapter",
-      "power cord",
-      "power outlet",
-      "power strip",
-      "tissue box"
+      "game controller",
+      "mouse pad",
+      "power strip"
     ],
     "fn": [
-      "airpod case"
+      "airpod case",
+      "cable",
+      "controller"
     ],
     "id": "id_15"
   },
   {
     "tp": [
       "backpack - backpack",
-      "notebook - booklet",
-      "pen - coiled notebook",
+      "notebook - coiled notebook",
       "tablet - computer tablet"
     ],
     "fp": [
-      "basket",
-      "pouch"
+      "laundry basket",
+      "pen"
     ],
     "fn": [
-      "bed",
       "bed pillow",
       "bedspread",
       "exercise book"
@@ -108,49 +97,44 @@
   },
   {
     "tp": [
-      "basket - basket",
-      "blanket - folded sweater",
-      "clothing - clothes",
-      "pouch - backpack"
+      "black suitcase - hardshell luggage",
+      "blue backpack - backpack",
+      "laundry basket - basket"
     ],
     "fp": [
-      "can",
-      "comb",
-      "jar",
-      "paper",
-      "pillow",
-      "shampoo bottle",
-      "tissue box",
-      "wallet"
+      "black suitcase",
+      "blue backpack",
+      "red suitcase"
     ],
     "fn": [
       "apparel",
       "blazer",
       "button down shirt",
+      "clothes",
       "computer bag",
-      "folded sweater",
-      "hardshell luggage"
+      "folded sweater"
     ],
     "id": "id_41"
   },
   {
     "tp": [
-      "apple laptop - apple laptop",
+      "blanket - bedspread",
       "earphones - earphones",
+      "laptop - laptop",
       "pillow - bed pillow"
     ],
-    "fp": [],
-    "fn": [],
+    "fp": [
+      "books"
+    ],
+    "fn": [
+      "bench"
+    ],
     "id": "id_79"
   },
   {
     "tp": [],
-    "fp": [
-      "box"
-    ],
-    "fn": [
-      "band"
-    ],
+    "fp": [],
+    "fn": [],
     "id": "id_96"
   }
 ]

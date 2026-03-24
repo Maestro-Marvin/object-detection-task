@@ -1,11 +1,11 @@
 {
-  "id_79": "[apple laptop, earphones] on bed id=79; [bed pillow] near bed id=79",
+  "id_79": "[bed pillow, bedspread] on bed id=79; [laptop, earphones] on bed id=79; [bench] near bed id=79",
   "id_107": "[electrical outlet] near cabinets id=107",
-  "id_16": "[backpack, computer tablet, coiled notebook, exercise book, booklet, bed pillow, bedspread, bed] on bench id=16",
-  "id_125": "[container, bubble wrap, remote control, jar] on counter id=125",
-  "id_117": "[aluminium tin, air tight container, air tight container, digestion aid, kitchen roll, bag, box, bag, alcohol, ginger, onion, fresh garlic, bottle cap] on bar cart id=117; [electric kettle] inside bar cart id=117",
-  "id_110": "[electrical outlet, glass bottle, basin, basin spout, backsplash] near counter id=110",
-  "id_15": "[controller, bluetooth mouse, airpod case, laptop, bluetooth keyboard, chair] near desk id=15",
-  "id_96": "[band] on box with lid id=96",
+  "id_16": "[backpack, computer tablet, coiled notebook, exercise book, bed pillow, bedspread] on bench id=16",
+  "id_125": "[digestion aid] on counter id=125",
+  "id_117": "[aluminium tin, air tight container, kitchen roll, bag, electric kettle, box, bag, alcohol, ginger, onion, fresh garlic, alcohol, bottle cap] on bar cart id=117",
+  "id_110": "[electrical outlet, glass bottle, basin, basin spout, backsplash] on counter id=110",
+  "id_15": "[bluetooth mouse, controller, airpod case, laptop, cable, chair, bluetooth keyboard] on desk id=15",
+  "id_96": "none",
   "id_41": "[folded sweater, folded sweater, apparel, basket, hardshell luggage, computer bag, blazer, blazer, button down shirt, folded sweater, apparel, folded sweater, backpack, clothes] near clothes rack id=41"
 }
