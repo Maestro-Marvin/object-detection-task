@@ -40,10 +40,10 @@ def main():
     CROPS_DIR.mkdir(exist_ok=True)
     logger.info("Loading object descriptions...")
     descriptions = load_descriptions(DESC_PATH)
-    
+    """
     frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
     logger.info(f"Processing {len(frame_names)} frames...")
-    """
+    
     gt_builder = GTBuilder(descriptions)
     for frame_name in frame_names:
         logger.info(f"Processing {frame_name}...")
@@ -74,7 +74,7 @@ def main():
     logger.info("Initializing VLMs...")
     #vlm_selector = CropSelectorVLM()
     vlm_task = SceneUnderstandingVLM()
-    #vlm_refiner = GTRefinementVLM()
+    vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
     final_result = {}
     final_gt = {}
@@ -112,12 +112,11 @@ def main():
         except Exception as e:
             final_gt[f"id_{obj_id}"] = f"ERROR: {str(e)}"
     
-    
-    #save_result(final_gt, GT_JSON)
+    save_result(final_gt, GT_JSON)
     save_result(final_result, PRED_JSON)
 
     del vlm_task
-    #del vlm_refiner
+    del vlm_refiner
     #del vlm_selector
     gc.collect()
     torch.cuda.empty_cache()

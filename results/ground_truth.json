@@ -1,10 +1,11 @@
 {
-  "id_90": "[box] inside drawers id=90; [microwave] on drawers id=90",
-  "id_127": "[computer, pillow, bed sheets] on bed id=127",
-  "id_67": "[backpack, router, exercise book, flask, desk fan] on shelves id=67; [binder, case, book] inside shelves id=67",
-  "id_34": "[desk lamp, microwave] on shelf id=34; [box] inside shelf id=34",
-  "id_110": "[detergent bottle, cleaner spray, bathing mug, cleaning sponge, brush, body wash bottle, conditioner bottle, shampoo bottle] on bathroom shelves id=110",
-  "id_73": "[hand cream tube, body lotion dispenser, aerosol canister, box, calculator, smartphone, glass jar, orange bottle, book, smartwatch, bowl, plates] on bookshelf id=73; [coat] near bookshelf id=73",
-  "id_70": "[plug socket] on cabinet id=70",
-  "id_71": "[kitchen countertop] on cabinets id=71"
+  "id_79": "[bed pillow, bench] near bed id=79; [laptop, earphones] on bed id=79",
+  "id_107": "[light fixture] on cabinets id=107; [plates, jars, containers] inside cabinets id=107",
+  "id_16": "[computer tablet, coiled notebook, exercise book, booklet, bed pillow, bedspread] on bench id=16; [backpack] near bench id=16",
+  "id_125": "[remote control, purple bottle, container with floral pattern, bubble wrap] on counter id=125",
+  "id_117": "[kitchen roll, air tight container, aluminium tin, electric kettle, bag, alcohol, ginger, onion, fresh garlic, bottle cap] on bar cart id=117; [air tight container, digestion aid, box, bag, alcohol, ginger, onion, fresh garlic, bottle cap] near bar cart id=117",
+  "id_110": "[electrical outlet, glass bottle, burner, basin spout, backsplash] on counter id=110",
+  "id_15": "[laptop, bluetooth keyboard, controller, bluetooth mouse, airpod case, cable, chair] on desk id=15",
+  "id_96": "none",
+  "id_41": "[blazer, button down shirt, folded sweater, apparel, backpack, clothes] on clothes rack id=41; [folded sweater, apparel, folded sweater, backpack, clothes] inside clothes rack id=41; [hardshell luggage, computer bag] near clothes rack id=41"
 }

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DATA_ROOT = Path("scenes")
+DATA_ROOT = Path("scenes/scene2")
 FRAMES_DIR = DATA_ROOT / "rgb"
 MASKS_DIR = DATA_ROOT / "gt_instance_iphone/render_instance_npy"
 DESC_PATH = DATA_ROOT / "gt_categories.json"
@@ -15,7 +15,7 @@ SELECTED_CROPS = Path("results/selected_crops.json")
 SUPPORT_KEYWORDS = {
     "table", "bed", "shelf", "bookshelf", "shelves",
     "floor", "countertop", "cabinets",
-    "drawers"
+    "drawers", "desk",  "counter"
 }
 
 MIN_BBOX_RATIO = 0.05

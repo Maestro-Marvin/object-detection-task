@@ -1,124 +1,153 @@
 [
   {
     "tp": [
-      "brush - brush",
-      "conditioner bottle - conditioner bottle",
-      "face wash bottle - body wash bottle",
-      "laundry detergent bottle - detergent bottle",
-      "shampoo bottle - shampoo bottle",
-      "sponge - cleaning sponge",
-      "spray bottle - cleaner spray"
+      "light - light fixture"
     ],
     "fp": [
-      "measuring cup",
-      "small white bottle"
+      "bottle",
+      "container"
     ],
     "fn": [
-      "bathing mug"
+      "containers",
+      "jars",
+      "plates"
+    ],
+    "id": "id_107"
+  },
+  {
+    "tp": [
+      "bottle - glass bottle",
+      "faucet - basin spout"
+    ],
+    "fp": [
+      "glass",
+      "soap dispenser"
+    ],
+    "fn": [
+      "backsplash",
+      "burner",
+      "electrical outlet"
     ],
     "id": "id_110"
   },
   {
     "tp": [
-      "laptop - computer",
-      "pillow - pillow"
+      "bag - bag",
+      "bag - bag",
+      "bottle - alcohol",
+      "electric kettle - electric kettle",
+      "garlic - fresh garlic",
+      "jar - bottle cap",
+      "onion - onion",
+      "tissue roll - kitchen roll"
     ],
-    "fp": [
-      "blanket",
-      "earbuds"
-    ],
+    "fp": [],
     "fn": [
-      "bed sheets"
+      "air tight container",
+      "alcohol",
+      "aluminium tin",
+      "bottle cap",
+      "box",
+      "digestion aid",
+      "fresh garlic",
+      "ginger",
+      "onion"
     ],
-    "id": "id_127"
+    "id": "id_117"
   },
   {
     "tp": [
-      "lamp - desk lamp",
-      "microwave - microwave"
+      "bottle - purple bottle",
+      "container - container with floral pattern"
+    ],
+    "fp": [],
+    "fn": [
+      "bubble wrap",
+      "remote control"
+    ],
+    "id": "id_125"
+  },
+  {
+    "tp": [
+      "chair - chair",
+      "earbuds case - airpod case",
+      "keyboard - bluetooth keyboard",
+      "laptop - laptop",
+      "mouse - bluetooth mouse",
+      "power cord - cable"
     ],
     "fp": [
-      "book"
+      "box",
+      "camera",
+      "game controller",
+      "notebook",
+      "power strip",
+      "ring"
     ],
     "fn": [
-      "box"
+      "controller"
     ],
-    "id": "id_34"
+    "id": "id_15"
   },
   {
     "tp": [
       "backpack - backpack",
-      "fan - desk fan"
+      "notebook - booklet",
+      "pen - coiled notebook",
+      "smartphone - computer tablet"
     ],
     "fp": [
-      "cables",
-      "magazine",
-      "mouse",
-      "water bottle"
-    ],
-    "fn": [
-      "binder",
       "book",
-      "case",
-      "exercise book",
-      "flask",
-      "router"
-    ],
-    "id": "id_67"
-  },
-  {
-    "tp": [
-      "electrical outlet - plug socket"
-    ],
-    "fp": [
-      "cutting board"
-    ],
-    "fn": [],
-    "id": "id_70"
-  },
-  {
-    "tp": [
-      "sink - kitchen countertop"
-    ],
-    "fp": [
-      "stove"
-    ],
-    "fn": [],
-    "id": "id_71"
-  },
-  {
-    "tp": [
-      "book - book",
-      "jar - glass jar",
-      "plate - plates",
-      "shampoo bottle - body lotion dispenser",
-      "smartphone - smartphone"
-    ],
-    "fp": [
-      "charger"
+      "laundry basket"
     ],
     "fn": [
-      "aerosol canister",
-      "bowl",
-      "box",
-      "calculator",
-      "coat",
-      "hand cream tube",
-      "orange bottle",
-      "smartwatch"
+      "bed pillow",
+      "bedspread",
+      "exercise book"
     ],
-    "id": "id_73"
+    "id": "id_16"
   },
   {
     "tp": [
-      "box - box",
-      "microwave - microwave"
+      "clothes - clothes"
     ],
     "fp": [
-      "helmet",
-      "wiring"
+      "comb",
+      "pillow",
+      "shampoo bottle",
+      "tissue box",
+      "wallet"
     ],
+    "fn": [
+      "apparel",
+      "backpack",
+      "blazer",
+      "button down shirt",
+      "clothes",
+      "computer bag",
+      "folded sweater",
+      "hardshell luggage"
+    ],
+    "id": "id_41"
+  },
+  {
+    "tp": [
+      "earphones - earphones",
+      "laptop - laptop",
+      "pillow - bed pillow"
+    ],
+    "fp": [
+      "blanket"
+    ],
+    "fn": [
+      "bench"
+    ],
+    "id": "id_79"
+  },
+  {
+    "tp": [],
+    "fp": [],
     "fn": [],
-    "id": "id_90"
+    "id": "id_96"
   }
 ]

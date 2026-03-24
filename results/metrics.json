@@ -1,9 +1,8 @@
 {
-  "Micro_Precision": 0.6111,
-  "Micro_Recall": 0.5641,
-  "Micro_F1": 0.5867,
-  "Macro_Precision": 0.5764,
-  "Macro_Recall": 0.7304,
-  "Macro_F1": 0.6092
+  "Micro_Precision": 0.6,
+  "Micro_Recall": 0.4737,
+  "Micro_F1": 0.5294,
+  "Macro_Precision": 0.5463,
+  "Macro_Recall": 0.4345,
+  "Macro_F1": 0.463
 }
-
