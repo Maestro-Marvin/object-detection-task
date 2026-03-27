@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, Set, Tuple
+from typing import Any, Dict, List, Set, Tuple
 from .embedding_matcher import EmbeddingMatcher
 
 
@@ -23,8 +23,20 @@ class Evaluator:
 
         self.embedding_matcher = EmbeddingMatcher()
 
-    def _parse_items(self, text: str) -> List[str]:
-        if text.strip().lower() == "none":
+    def _parse_items(self, value: Any) -> List[str]:
+        if value is None:
+            return []
+        if isinstance(value, list):
+            out: List[str] = []
+            for x in value:
+                if isinstance(x, str):
+                    s = x.strip().lower()
+                    if s:
+                        out.append(s)
+            return out
+
+        text = str(value)
+        if text.strip().lower() in ("none", "[]"):
             return []
 
         items = []
@@ -94,7 +106,7 @@ class Evaluator:
 
         return matched_pairs, fp, fn
 
-    def evaluate_pair(self, prediction: str, ground_truth: str) -> Dict:
+    def evaluate_pair(self, prediction: Any, ground_truth: Any) -> Dict:
         pred_items = self._parse_items(prediction)
         gt_items = self._parse_items(ground_truth)
 
@@ -108,7 +120,7 @@ class Evaluator:
             "fn": sorted(fn),
         }
 
-    def evaluate(self, pred_data: Dict[str, str], gt_data: Dict[str, str]) -> List[Dict]:
+    def evaluate(self, pred_data: Dict[str, Any], gt_data: Dict[str, Any]) -> List[Dict]:
         results = []
 
         common_ids = set(pred_data.keys()) & set(gt_data.keys())

@@ -14,9 +14,6 @@
     "laptop",
     "modem"
   ],
-  "96": [
-    "band"
-  ],
   "41": [
     "folded sweater",
     "folded sweater",
@@ -48,10 +45,6 @@
     "bed pillow",
     "bedspread"
   ],
-  "107": [
-    "electrical outlet",
-    "demin jacket"
-  ],
   "110": [
     "burner",
     "electrical outlet",
@@ -79,8 +72,5 @@
     "fresh garlic",
     "alcohol",
     "bottle cap"
-  ],
-  "125": [
-    "digestion aid"
   ]
 }

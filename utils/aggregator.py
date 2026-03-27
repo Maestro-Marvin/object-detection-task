@@ -15,5 +15,6 @@ def collect_crops_by_object(crops_dir: Path) -> dict[int, list[Path]]:
     return object_crops
 
 def save_result(result: dict, output_path: Path):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)

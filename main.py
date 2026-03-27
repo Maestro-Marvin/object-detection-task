@@ -1,8 +1,9 @@
-import math
 import logging
 import json
 import torch
 import gc
+import psutil
+from typing import Any, List
 from pathlib import Path
 from config import *
 from utils.data_loader import load_descriptions, load_frame_and_mask
@@ -10,12 +11,30 @@ from support_objects.select_support_object import select_support_objects
 from utils.cropper import save_crop
 from vlm.scene_understanding import SceneUnderstandingVLM
 from vlm.gt_refinement import GTRefinementVLM
+from vlm.item_detailer import ItemDetailerVLM
 from evaluate.evaluator import Evaluator
 from evaluate.calculate_metrics import calculate_metrics
 from utils.aggregator import *
 from utils.gt_builder import GTBuilder
 from support_objects.select_best_crops import select_best_crops_tournament
 from vlm.crop_selector import CropSelectorVLM
+
+def _safe_json_list(raw: Any) -> List[str]:
+    if isinstance(raw, list):
+        return [str(x).strip().lower() for x in raw if str(x).strip()]
+    if raw is None:
+        return []
+    text = str(raw).strip()
+    if not text or text.lower() in ("none", "[]"):
+        return []
+    try:
+        parsed = json.loads(text)
+    except Exception:
+        return []
+    if not isinstance(parsed, list):
+        return []
+    return [str(x).strip().lower() for x in parsed if isinstance(x, str) and x.strip()]
+
 
 def setup_logging():
     logging.basicConfig(
@@ -26,12 +45,34 @@ def setup_logging():
         ]
     )
 
-def get_uniform_crops(crops : list[Path]):
-    interval = math.ceil(len(crops) / MAX_CROPS_PER_REQUEST)
-    if interval == 0:
-        return crops
-    return crops[::interval]
-
+def _release_model(model) -> None:
+    try:
+        llm = getattr(model, "llm", None)
+        if llm is not None:
+            llm_engine = getattr(llm, "llm_engine", None)
+            if llm_engine is not None and hasattr(llm_engine, "shutdown"):
+                llm_engine.shutdown()
+    except Exception:
+        pass
+    del model
+    gc.collect()
+    torch.cuda.empty_cache()
+    if torch.cuda.is_available():
+        try:
+            torch.cuda.ipc_collect()
+        except Exception:
+            pass
+    current_pid = psutil.Process().pid
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            if proc.info['pid'] == current_pid:
+                continue
+            cmdline = ' '.join(proc.info.get('cmdline', []))
+            if 'VLLM::EngineCore' in cmdline or 'vllm' in cmdline.lower():
+                proc.terminate()
+                proc.wait(timeout=3)
+        except (psutil.NoSuchProcess, psutil.TimeoutExpired):
+            continue
 
 def main():
     setup_logging()
@@ -40,10 +81,10 @@ def main():
     CROPS_DIR.mkdir(exist_ok=True)
     logger.info("Loading object descriptions...")
     descriptions = load_descriptions(DESC_PATH)
-    """
+    
     frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
     logger.info(f"Processing {len(frame_names)} frames...")
-    
+    """
     gt_builder = GTBuilder(descriptions)
     for frame_name in frame_names:
         logger.info(f"Processing {frame_name}...")
@@ -71,17 +112,16 @@ def main():
     except FileNotFoundError:
         selected_crops_cache = {}
 
-    logger.info("Initializing VLMs...")
-    #vlm_selector = CropSelectorVLM()
-    vlm_task = SceneUnderstandingVLM()
-    vlm_refiner = GTRefinementVLM()
     object_crops = collect_crops_by_object(CROPS_DIR)
+    selected_by_object = {}
     final_result = {}
+    detailed_result = {}
     final_gt = {}
 
+    logger.info("Stage 1/4: selecting best crops...")
+    vlm_selector = CropSelectorVLM()
     for obj_id, crop_paths in object_crops.items():
         desc = descriptions[obj_id][0]
-
         cache_key = str(obj_id)
         if cache_key in selected_crops_cache:
             selected = [Path(p) for p in selected_crops_cache[cache_key]]
@@ -89,38 +129,54 @@ def main():
             try:
                 selected_paths = select_best_crops_tournament(crop_paths, vlm_selector, desc, obj_id)
             except Exception:
-                selected_paths = get_uniform_crops(crop_paths)
+                selected_paths = []
 
             selected = selected_paths
             selected_crops_cache[cache_key] = [str(p) for p in selected_paths]
             save_result(selected_crops_cache, SELECTED_CROPS)
-
-        candidates = temp_gt.get(obj_id, [])
-        logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
-
-        try:
-            response = vlm_task.query(selected, desc, obj_id)
-            final_result[f"id_{obj_id}"] = response
-        except Exception as e:
-            final_result[f"id_{obj_id}"] = f"ERROR: {str(e)}"
-
-        logger.info(f"Querying refiner VLM for {obj_id}: {desc} ({len(selected)} crops)")
-
-        try:
-            response = vlm_refiner.query(selected, desc, obj_id, candidates)
-            final_gt[f"id_{obj_id}"] = response
-        except Exception as e:
-            final_gt[f"id_{obj_id}"] = f"ERROR: {str(e)}"
+        selected_by_object[obj_id] = selected
+    _release_model(vlm_selector)
     
-    save_result(final_gt, GT_JSON)
+    logger.info("Stage 2/4: scene understanding...")
+    vlm_task = SceneUnderstandingVLM()
+    for obj_id, selected in selected_by_object.items():
+        desc = descriptions[obj_id][0]
+        logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        try:
+            response_text = vlm_task.query(selected, desc, obj_id)
+            final_result[f"id_{obj_id}"] = _safe_json_list(response_text)
+        except Exception:
+            final_result[f"id_{obj_id}"] = []
+    _release_model(vlm_task)
     save_result(final_result, PRED_JSON)
 
-    del vlm_task
-    del vlm_refiner
-    #del vlm_selector
-    gc.collect()
-    torch.cuda.empty_cache()
-    
+    logger.info("Stage 3/4: detailed item descriptions...")
+    vlm_detailer = ItemDetailerVLM()
+    for obj_id, selected in selected_by_object.items():
+        desc = descriptions[obj_id][0]
+        logger.info(f"Querying detail VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        try:
+            detailed = vlm_detailer.query(selected, desc, obj_id, final_result[f"id_{obj_id}"])
+            detailed_result[f"id_{obj_id}"] = _safe_json_list(detailed)
+        except Exception:
+            detailed_result[f"id_{obj_id}"] = []
+    _release_model(vlm_detailer)
+    save_result(detailed_result, DETAILED_PRED_JSON)
+
+    logger.info("Stage 4/4: GT refinement...")
+    vlm_refiner = GTRefinementVLM()
+    for obj_id, selected in selected_by_object.items():
+        desc = descriptions[obj_id][0]
+        candidates = temp_gt.get(obj_id, [])
+        logger.info(f"Querying refiner VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        try:
+            response_text = vlm_refiner.query(selected, desc, obj_id, candidates)
+            final_gt[f"id_{obj_id}"] = _safe_json_list(response_text)
+        except Exception:
+            final_gt[f"id_{obj_id}"] = []
+    _release_model(vlm_refiner)
+    save_result(final_gt, GT_JSON)
+
     with open(PRED_JSON, "r", encoding="utf-8") as f:
         final_result = json.load(f)
         final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}

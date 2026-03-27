@@ -1,11 +1,60 @@
 {
-  "id_79": "[laptop, earphones] on bed id=79; [pillow, blanket] near bed id=79",
-  "id_107": "[light] on cabinets id=107; [container, bottle] inside cabinets id=107",
-  "id_16": "[book, notebook, pen, smartphone] on bench id=16\n[backpack] near bench id=16\n[laundry basket] near bench id=16",
-  "id_125": "[container, bottle] on counter id=125",
-  "id_117": "[tissue roll, jar, bag] on bar cart id=117; [electric kettle, bag] inside bar cart id=117; [onion, garlic, bottle] near bar cart id=117",
-  "id_110": "[bottle, soap dispenser, faucet] on counter id=110; [glass] inside sink id=110",
-  "id_15": "[laptop, keyboard, game controller, mouse, earbuds case, power cord, chair, power strip, notebook, ring, camera, box] on desk id=15",
-  "id_96": "none",
-  "id_41": "[shampoo bottle, wallet, comb, tissue box] on clothes rack id=41; [clothes] inside clothes rack id=41; [pillow] near clothes rack id=41"
+  "id_79": [
+    "laptop",
+    "earphones",
+    "pillow",
+    "blanket",
+    "book"
+  ],
+  "id_16": [
+    "book",
+    "tablet",
+    "backpack",
+    "laundry basket"
+  ],
+  "id_117": [
+    "tissue roll",
+    "jar",
+    "electric kettle",
+    "plastic bag",
+    "onion",
+    "garlic",
+    "alcohol bottle",
+    "plastic container",
+    "oil bottle"
+  ],
+  "id_110": [
+    "bottle",
+    "soap dispenser",
+    "faucet",
+    "stove",
+    "sink"
+  ],
+  "id_15": [
+    "laptop",
+    "keyboard",
+    "game controller",
+    "mouse",
+    "wire",
+    "chair",
+    "power strip",
+    "book",
+    "headphones",
+    "box",
+    "bottle",
+    "candle",
+    "printer"
+  ],
+  "id_41": [
+    "suitcase",
+    "backpack",
+    "pillow",
+    "clothes",
+    "basket",
+    "shampoo bottle",
+    "wallet",
+    "comb",
+    "tissue box",
+    "book"
+  ]
 }
