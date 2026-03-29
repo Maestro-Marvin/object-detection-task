@@ -4,12 +4,12 @@ from pathlib import Path
 from typing import List
 
 class GTRefinementVLM(VLMClient):
-    def query(self, image_paths: List[Path], description: str, obj_id: int, candidates: List[str]) -> str:
+    def query(self, image_paths: List[Path], support_description: str, candidates: List[str]) -> str:
         if not candidates:
             return "[]"
 
         candidates_str = ", ".join(candidates)
-        prompt_text = f"""You are an expert in spatial scene understanding. You are shown {len(image_paths)} recent views of the same SUPPORT object: '{description}' (ID: {obj_id}).
+        prompt_text = f"""You are an expert in spatial scene understanding. You are shown {len(image_paths)} recent views of the same SUPPORT object: '{support_description}'.
 
         ### YOUR TASK:
         Identify ALL clearly visible items that have a DIRECT spatial relationship with this support object (on it, inside it, or near it).
@@ -30,7 +30,7 @@ class GTRefinementVLM(VLMClient):
         - Focus only on the central support object and its associated items.
 
         ### OUTPUT (STRICT JSON):
-        - NEVER include the support object itself ('{description}').
+        - NEVER include the support object itself '{support_description}'.
         - Return a JSON array of strings, e.g. ["lamp", "notebook"].
         - If NO associated items are visible, return an empty JSON array: [].
         - Return ONLY valid JSON. No explanations, no markdown.

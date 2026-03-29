@@ -127,7 +127,7 @@ def main():
             selected = [Path(p) for p in selected_crops_cache[cache_key]]
         else:
             try:
-                selected_paths = select_best_crops_tournament(crop_paths, vlm_selector, desc, obj_id)
+                selected_paths = select_best_crops_tournament(crop_paths, vlm_selector, desc)
             except Exception:
                 selected_paths = []
 
@@ -143,7 +143,7 @@ def main():
         desc = descriptions[obj_id][0]
         logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
         try:
-            response_text = vlm_task.query(selected, desc, obj_id)
+            response_text = vlm_task.query(selected, desc)
             final_result[f"id_{obj_id}"] = _safe_json_list(response_text)
         except Exception:
             final_result[f"id_{obj_id}"] = []
@@ -156,7 +156,7 @@ def main():
         desc = descriptions[obj_id][0]
         logger.info(f"Querying detail VLM for {obj_id}: {desc} ({len(selected)} crops)")
         try:
-            detailed = vlm_detailer.query(selected, desc, obj_id, final_result[f"id_{obj_id}"])
+            detailed = vlm_detailer.query(selected, desc, final_result[f"id_{obj_id}"])
             detailed_result[f"id_{obj_id}"] = _safe_json_list(detailed)
         except Exception:
             detailed_result[f"id_{obj_id}"] = []
@@ -170,7 +170,7 @@ def main():
         candidates = temp_gt.get(obj_id, [])
         logger.info(f"Querying refiner VLM for {obj_id}: {desc} ({len(selected)} crops)")
         try:
-            response_text = vlm_refiner.query(selected, desc, obj_id, candidates)
+            response_text = vlm_refiner.query(selected, desc, candidates)
             final_gt[f"id_{obj_id}"] = _safe_json_list(response_text)
         except Exception:
             final_gt[f"id_{obj_id}"] = []

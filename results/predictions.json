@@ -8,6 +8,7 @@
   ],
   "id_16": [
     "book",
+    "pen",
     "tablet",
     "backpack",
     "laundry basket"
@@ -27,8 +28,7 @@
     "bottle",
     "soap dispenser",
     "faucet",
-    "stove",
-    "sink"
+    "stove"
   ],
   "id_15": [
     "laptop",

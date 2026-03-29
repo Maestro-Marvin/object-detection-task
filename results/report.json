@@ -1,0 +1,118 @@
+[
+  {
+    "tp": [
+      "bottle - glass bottle",
+      "faucet - basin spout"
+    ],
+    "fp": [
+      "soap dispenser",
+      "stove"
+    ],
+    "fn": [
+      "backsplash",
+      "basin",
+      "electrical outlet"
+    ],
+    "id": "id_110"
+  },
+  {
+    "tp": [
+      "alcohol bottle - alcohol",
+      "electric kettle - electric kettle",
+      "garlic - fresh garlic",
+      "jar - bottle cap",
+      "onion - onion",
+      "plastic container - air tight container",
+      "tissue roll - kitchen roll"
+    ],
+    "fp": [
+      "oil bottle",
+      "plastic bag"
+    ],
+    "fn": [
+      "alcohol",
+      "bag"
+    ],
+    "id": "id_117"
+  },
+  {
+    "tp": [
+      "bottle - aerosol can",
+      "box - container",
+      "chair - chair",
+      "headphones - airpod case",
+      "keyboard - bluetooth keyboard",
+      "laptop - laptop",
+      "mouse - bluetooth mouse",
+      "printer - copier",
+      "wire - cable"
+    ],
+    "fp": [
+      "book",
+      "candle",
+      "game controller",
+      "power strip"
+    ],
+    "fn": [
+      "controller",
+      "desk organizer",
+      "hardshell luggage",
+      "modem"
+    ],
+    "id": "id_15"
+  },
+  {
+    "tp": [
+      "backpack - backpack",
+      "pen - coiled notebook",
+      "tablet - computer tablet"
+    ],
+    "fp": [
+      "book",
+      "laundry basket"
+    ],
+    "fn": [
+      "bed pillow",
+      "bedspread",
+      "exercise book"
+    ],
+    "id": "id_16"
+  },
+  {
+    "tp": [
+      "backpack - backpack",
+      "basket - basket",
+      "clothes - clothes",
+      "suitcase - hardshell luggage"
+    ],
+    "fp": [
+      "book",
+      "comb",
+      "pillow",
+      "shampoo bottle",
+      "tissue box",
+      "wallet"
+    ],
+    "fn": [
+      "apparel",
+      "blazer",
+      "button down shirt",
+      "computer bag",
+      "folded sweater"
+    ],
+    "id": "id_41"
+  },
+  {
+    "tp": [
+      "blanket - bedspread",
+      "earphones - earphones",
+      "laptop - laptop",
+      "pillow - pillow"
+    ],
+    "fp": [
+      "book"
+    ],
+    "fn": [],
+    "id": "id_79"
+  }
+]
