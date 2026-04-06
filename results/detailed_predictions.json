@@ -1,59 +1,428 @@
 {
   "id_79": [
-    "silver laptop with black apple logo, closed and resting on bed",
-    "black coiled earphones with small earbuds, lying on bedspread",
-    "pink floral-patterned pillow, partially crumpled, at head of bed",
-    "red folded blanket, placed at foot of bed",
-    "stack of books with colorful covers, on bedside table"
+    {
+      "label": "laptop",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "metallic",
+      "color": "silver",
+      "text_markings": "apple logo",
+      "confidence": "high"
+    },
+    {
+      "label": "earphones",
+      "relation": "on",
+      "shape": "coiled cable with earbuds",
+      "material": "black plastic and wire",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "pillow",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "fabric",
+      "color": "pink with white floral pattern",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "blanket",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "fabric",
+      "color": "pink and white with floral and polka dot patterns",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "book",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "paper cover",
+      "color": "pink and blue",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ],
   "id_16": [
-    "pink spiral-bound notebook with blue cover and handwritten text, topped with a paisley-patterned wallet and a pen",
-    "silver and black pen with a white grip section, lying horizontally on a wallet",
-    "dark gray rectangular tablet with smooth surface, placed on a white bench",
-    "black fabric backpack with visible straps and zipper, resting on the bench",
-    "white cylindrical laundry basket with red and black floral patterns"
+    {
+      "label": "book",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "paper",
+      "color": "pink and blue",
+      "text_markings": "Marathi script",
+      "confidence": "high"
+    },
+    {
+      "label": "pen",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "plastic and metal",
+      "color": "white and silver",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "tablet",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "glass and plastic",
+      "color": "dark gray",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "backpack",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "fabric",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "laundry basket",
+      "relation": "near",
+      "shape": "cylindrical",
+      "material": "fabric",
+      "color": "white with red and black floral patterns",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ],
   "id_117": [
-    "white cylindrical tissue roll with a central cardboard tube, placed on a wooden shelf",
-    "clear plastic jar with a red lid and floral patterned body, containing mixed contents",
-    "silver and black electric kettle with a curved spout and handle, resting on a lower shelf",
-    "black and white checkered plastic bag, crumpled and partially visible on a lower shelf",
-    "red onion with a glossy skin, round and bulbous, resting on a shelf",
-    "white garlic bulb with papery skin, partially peeled, sitting next to the onion",
-    "clear glass bottle with a red cap and 'smirnoff' label, containing vodka",
-    "clear plastic container with a red lid, holding mixed contents, placed on a shelf",
-    "plastic bottle with a yellow label and transparent body, containing oil, partially visible behind other items"
+    {
+      "label": "tissue roll",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "paper",
+      "color": "white",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "jar",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "plastic",
+      "color": "transparent with red lid",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "electric kettle",
+      "relation": "inside",
+      "shape": "cylindrical with curved handle",
+      "material": "metallic",
+      "color": "silver and black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "plastic bag",
+      "relation": "on",
+      "shape": "rectangular, crumpled",
+      "material": "plastic",
+      "color": "black and white checkered",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "onion",
+      "relation": "on",
+      "shape": "spherical",
+      "material": "vegetable skin",
+      "color": "red",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "garlic",
+      "relation": "on",
+      "shape": "spherical cluster",
+      "material": "vegetable skin",
+      "color": "white",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "alcohol bottle",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "glass",
+      "color": "clear with red cap",
+      "text_markings": "RNDOFF",
+      "confidence": "high"
+    },
+    {
+      "label": "plastic container",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "plastic",
+      "color": "green",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "oil bottle",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "plastic",
+      "color": "transparent with yellow liquid",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ],
   "id_110": [
-    "clear glass bottle with yellow cap and ribbed body",
-    "yellow plastic soap dispenser with white label and pump",
-    "chrome faucet with single handle and curved spout",
-    "rectangular black glass-ceramic stove with silver frame"
+    {
+      "label": "bottle",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "transparent plastic",
+      "color": "clear",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "soap dispenser",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "plastic",
+      "color": "yellow",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "faucet",
+      "relation": "on",
+      "shape": "curved",
+      "material": "metal",
+      "color": "silver",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "stove",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "glass-ceramic",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ],
   "id_15": [
-    "black laptop with red accents and msi logo, screen off",
-    "black keyboard with matte finish and hp logo on spacebar",
-    "black game controller with red analog sticks and textured grips",
-    "black hp mouse with glossy finish and circular hp logo",
-    "black coiled wire with two-prong plug, lying on metallic surface",
-    "green and white striped chair with metal frame and fabric cushion",
-    "white rectangular power strip with multiple outlets, on wooden floor",
-    "black rectangular book or case with smooth surface, lying on desk",
-    "not clearly visible",
-    "not clearly visible",
-    "not clearly visible",
-    "not clearly visible"
+    {
+      "label": "laptop",
+      "relation": "on",
+      "shape": "rectangular, thin profile",
+      "material": "glossy plastic",
+      "color": "black",
+      "text_markings": "MSI",
+      "confidence": "high"
+    },
+    {
+      "label": "keyboard",
+      "relation": "on",
+      "shape": "rectangular, full-size",
+      "material": "glossy plastic",
+      "color": "black",
+      "text_markings": "HP",
+      "confidence": "high"
+    },
+    {
+      "label": "game controller",
+      "relation": "on",
+      "shape": "ergonomic, symmetrical",
+      "material": "glossy plastic",
+      "color": "black with red accents",
+      "text_markings": "AF ESPORTS",
+      "confidence": "high"
+    },
+    {
+      "label": "mouse",
+      "relation": "on",
+      "shape": "ergonomic, curved",
+      "material": "glossy plastic",
+      "color": "black",
+      "text_markings": "HP",
+      "confidence": "high"
+    },
+    {
+      "label": "wire",
+      "relation": "on",
+      "shape": "coiled",
+      "material": "rubber-coated",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "chair",
+      "relation": "near",
+      "shape": "metal frame with cushioned seat",
+      "material": "metal and fabric",
+      "color": "green and white",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "power strip",
+      "relation": "near",
+      "shape": "rectangular",
+      "material": "plastic",
+      "color": "white",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "book",
+      "relation": "on",
+      "shape": "rectangular, slim",
+      "material": "leather or synthetic cover",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "headphones",
+      "relation": "near",
+      "shape": "circular coil",
+      "material": "metal",
+      "color": "silver",
+      "text_markings": null,
+      "confidence": "medium"
+    },
+    {
+      "label": "box",
+      "relation": "near",
+      "shape": "rectangular",
+      "material": "metallic",
+      "color": "silver",
+      "text_markings": null,
+      "confidence": "medium"
+    },
+    {
+      "label": "bottle",
+      "relation": "near",
+      "shape": "cylindrical",
+      "material": "plastic",
+      "color": "red",
+      "text_markings": null,
+      "confidence": "medium"
+    },
+    {
+      "label": "candle",
+      "relation": "near",
+      "shape": "cylindrical",
+      "material": "ceramic",
+      "color": "blue",
+      "text_markings": "INDIA",
+      "confidence": "medium"
+    },
+    {
+      "label": "printer",
+      "relation": "on",
+      "shape": "rectangular, boxy",
+      "material": "plastic",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ],
   "id_41": [
-    "black hard-shell suitcase with wheels and a textured surface",
-    "blue backpack with fabric texture and adjustable straps",
-    "orange velvet pillow with a soft, plush surface",
-    "stack of folded clothes in various colors including blue, white, and black",
-    "black woven basket with a textured, basket-weave pattern",
-    "blue cylindrical shampoo bottle with a white cap and label",
-    "brown leather wallet with embossed floral pattern",
-    "wooden comb with evenly spaced teeth",
-    "not clearly visible",
-    "black book with white text on the spine"
+    {
+      "label": "suitcase",
+      "relation": "near",
+      "shape": "rectangular",
+      "material": "hard plastic",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "backpack",
+      "relation": "near",
+      "shape": "rectangular with straps",
+      "material": "fabric",
+      "color": "blue",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "pillow",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "velvet",
+      "color": "orange",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "clothes",
+      "relation": "on",
+      "shape": "stacked",
+      "material": "fabric",
+      "color": "various",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "basket",
+      "relation": "inside",
+      "shape": "rectangular",
+      "material": "woven",
+      "color": "black",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "shampoo bottle",
+      "relation": "on",
+      "shape": "cylindrical",
+      "material": "plastic",
+      "color": "blue",
+      "text_markings": "NIVEA MEN",
+      "confidence": "high"
+    },
+    {
+      "label": "wallet",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "leather",
+      "color": "brown",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "comb",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "wood",
+      "color": "light brown",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "tissue box",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "plastic",
+      "color": "blue",
+      "text_markings": null,
+      "confidence": "high"
+    },
+    {
+      "label": "book",
+      "relation": "on",
+      "shape": "rectangular",
+      "material": "paper",
+      "color": "black and white",
+      "text_markings": null,
+      "confidence": "high"
+    }
   ]
 }

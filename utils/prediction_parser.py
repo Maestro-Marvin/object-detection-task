@@ -1,5 +1,6 @@
 import re
-from typing import Dict, List, Tuple
+import json
+from typing import Any, Dict, List, Tuple
 
 
 _BRACKET_RE = re.compile(r"\[([^\]]+)\]")
@@ -51,3 +52,48 @@ def group_items_by_name(items_with_rel: List[Tuple[str, str]]) -> Dict[str, List
             grouped[item].append(rel)
     return grouped
 
+
+def safe_json_list(raw: Any) -> List[str]:
+    if isinstance(raw, list):
+        return [str(x).strip().lower() for x in raw if str(x).strip()]
+    if raw is None:
+        return []
+    text = str(raw).strip()
+    if not text or text.lower() in ("none", "[]"):
+        return []
+    try:
+        parsed = json.loads(text)
+    except Exception:
+        return []
+    if not isinstance(parsed, list):
+        return []
+    return [str(x).strip().lower() for x in parsed if isinstance(x, str) and x.strip()]
+
+
+def safe_detailed_descriptions(raw: Any) -> List[dict]:
+    if isinstance(raw, list):
+        valid_items = []
+        for item in raw:
+            if isinstance(item, dict) and "label" in item:
+                valid_items.append(item)
+        return valid_items
+    if raw is None:
+        return []
+    text = str(raw).strip()
+    if not text or text.lower() in ("none", "[]"):
+        return []
+    text = re.sub(r'^```json\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'^```\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\s*```$', '', text, flags=re.IGNORECASE)
+    text = text.strip()
+    try:
+        parsed = json.loads(text)
+        if isinstance(parsed, list):
+            valid_items = []
+            for item in parsed:
+                if isinstance(item, dict) and "label" in item:
+                    valid_items.append(item)
+            return valid_items
+    except Exception:
+        pass
+    return []
