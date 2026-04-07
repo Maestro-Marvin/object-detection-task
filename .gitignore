@@ -7,3 +7,5 @@ pictures/
 __pycache__
 .venv
 .ipynb_checkpoints
+sam3/weights/
+localization/

@@ -36,3 +36,10 @@ SELECTOR_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
 DETAIL_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
 EMBED_MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 MAX_CROPS_PER_REQUEST = 5
+
+# --- SAM3 localization (Ultralytics) ---
+LOCALIZATION_DIR = Path("localization")
+SAM3_MODEL_PATH = Path("sam3/weights/sam3.pt")
+SAM3_CONF = 0.25
+SAM3_HALF = True
+SAM3_SAVE_BINARY_MASKS = True

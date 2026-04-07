@@ -16,6 +16,7 @@ from support_objects.select_best_crops import select_best_crops_tournament
 from vlm.crop_selector import CropSelectorVLM
 from utils.clear_memory import release_model
 from utils.prediction_parser import safe_json_list, safe_detailed_descriptions
+from sam3.sam3_localization import SAM3Localizer
 
 def setup_logging():
     logging.basicConfig(
@@ -36,7 +37,7 @@ def main():
     
     frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
     logger.info(f"Processing {len(frame_names)} frames...")
-    
+    """
     gt_builder = GTBuilder(descriptions)
     for frame_name in frame_names:
         logger.info(f"Processing {frame_name}...")
@@ -53,7 +54,7 @@ def main():
         gt_builder.process_frame(mask, supports)
     temp_gt = gt_builder.build_gt()
     save_result(temp_gt, TEMP_GT_JSON)
-    
+    """
     with open(TEMP_GT_JSON, "r", encoding="utf-8") as f:
         temp_gt = json.load(f)
         temp_gt = {int(k) if k.isdigit() else k: v for k, v in temp_gt.items()}
@@ -71,7 +72,7 @@ def main():
     final_gt = {}
     
     logger.info("Stage 1/4: selecting best crops...")
-    vlm_selector = CropSelectorVLM()
+    #vlm_selector = CropSelectorVLM()
     for obj_id, crop_paths in object_crops.items():
         desc = descriptions[obj_id][0]
         cache_key = str(obj_id)
@@ -87,8 +88,8 @@ def main():
             selected_crops_cache[cache_key] = [str(p) for p in selected_paths]
             save_result(selected_crops_cache, SELECTED_CROPS)
         selected_by_object[obj_id] = selected
-    release_model(vlm_selector)
-    
+    #release_model(vlm_selector)
+    """
     logger.info("Stage 2/4: scene understanding...")
     vlm_task = SceneUnderstandingVLM()
     for obj_id, selected in selected_by_object.items():
@@ -102,9 +103,6 @@ def main():
     release_model(vlm_task)
     save_result(final_result, PRED_JSON)
     
-    with open(PRED_JSON, "r", encoding="utf-8") as f:
-        final_result = json.load(f)
-        final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}
     logger.info("Stage 3/4: detailed item descriptions...")
     vlm_detailer = ItemDetailerVLM()
     for obj_id, selected in selected_by_object.items():
@@ -120,7 +118,22 @@ def main():
             detailed_result[f"id_{obj_id}"] = []
     release_model(vlm_detailer)
     save_result(detailed_result, DETAILED_PRED_JSON)
-    
+    """
+    with open(PRED_JSON, "r", encoding="utf-8") as f:
+        final_result = json.load(f)
+        final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}
+    logger.info("Stage 4/4: SAM3 localization on original frames...")
+    sam3_localizer = SAM3Localizer()
+    for obj_id, selected in selected_by_object.items():
+        try:
+            sam3_localizer.localize_object(
+                obj_id=obj_id,
+                selected_crops=selected,
+                labels=final_result[f"id_{obj_id}"]
+            )
+        except Exception as e:
+            logger.exception(f"SAM3 localization failed: {e}")
+    """
     logger.info("Stage 4/4: GT refinement...")
     vlm_refiner = GTRefinementVLM()
     for obj_id, selected in selected_by_object.items():
@@ -150,7 +163,7 @@ def main():
     logger.info("Calculating metrics...")
     metrics = calculate_metrics(results)
     save_result(metrics, METRICS_JSON)
-    
+    """
 
 if __name__ == "__main__":
     main()
