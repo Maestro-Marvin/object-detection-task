@@ -103,6 +103,10 @@ def main():
     release_model(vlm_task)
     save_result(final_result, PRED_JSON)
     
+    with open(PRED_JSON, "r", encoding="utf-8") as f:
+        final_result = json.load(f)
+        final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}
+    
     logger.info("Stage 3/4: detailed item descriptions...")
     vlm_detailer = ItemDetailerVLM()
     for obj_id, selected in selected_by_object.items():
@@ -113,23 +117,29 @@ def main():
             detailed_result[f"id_{obj_id}"] = safe_detailed_descriptions(detailed)
         except Exception:
             detailed_result[f"id_{obj_id}"] = []
-    release_model(vlm_detailer)
     save_result(detailed_result, DETAILED_PRED_JSON)
+    release_model(vlm_detailer)
     """
-    with open(PRED_JSON, "r", encoding="utf-8") as f:
-        final_result = json.load(f)
-        final_result = {int(k) if k.isdigit() else k: v for k, v in final_result.items()}
+    with open(DETAILED_PRED_JSON, "r", encoding="utf-8") as f:
+        detailed_result = json.load(f)
+
     logger.info("Stage 4/4: SAM3 localization on original frames...")
-    sam3_localizer = SAM3Localizer()
+    from vlm.mask_chooser import SAM3MaskChooserVLM
+
+    mask_chooser = SAM3MaskChooserVLM()
+    sam3_localizer = SAM3Localizer(mask_chooser_vlm=mask_chooser)
     for obj_id, selected in selected_by_object.items():
         try:
+            id_key = f"id_{obj_id}"
+            items = detailed_result.get(id_key) or final_result.get(id_key, [])
             sam3_localizer.localize_object(
                 obj_id=obj_id,
                 selected_crops=selected,
-                labels=final_result[f"id_{obj_id}"]
+                items=items,
             )
         except Exception as e:
             logger.exception(f"SAM3 localization failed: {e}")
+    release_model(mask_chooser)
     """
     logger.info("Stage 4/4: GT refinement...")
     vlm_refiner = GTRefinementVLM()

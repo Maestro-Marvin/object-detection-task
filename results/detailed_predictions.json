@@ -7,15 +7,17 @@
       "material": "metallic",
       "color": "silver",
       "text_markings": "apple logo",
+      "description": "silver rectangular laptop with visible apple logo on lid",
       "confidence": "high"
     },
     {
       "label": "earphones",
       "relation": "on",
-      "shape": "coiled cable with earbuds",
+      "shape": "coiled cable",
       "material": "black plastic and wire",
       "color": "black",
       "text_markings": null,
+      "description": "black coiled earphone cable with earbuds, lying on bedspread",
       "confidence": "high"
     },
     {
@@ -25,6 +27,7 @@
       "material": "fabric",
       "color": "pink with white floral pattern",
       "text_markings": null,
+      "description": "pink rectangular pillow with white floral pattern, partially folded",
       "confidence": "high"
     },
     {
@@ -34,16 +37,18 @@
       "material": "fabric",
       "color": "pink and white with floral and polka dot patterns",
       "text_markings": null,
+      "description": "pink and white rectangular blanket with floral and polka dot patterns, slightly wrinkled",
       "confidence": "high"
     },
     {
       "label": "book",
-      "relation": "on",
+      "relation": "near",
       "shape": "rectangular",
       "material": "paper cover",
       "color": "pink and blue",
       "text_markings": null,
-      "confidence": "high"
+      "description": "pink and blue rectangular book with visible cover, placed on bedside surface",
+      "confidence": "medium"
     }
   ],
   "id_16": [
@@ -53,25 +58,28 @@
       "shape": "rectangular",
       "material": "paper",
       "color": "pink and blue",
-      "text_markings": "Marathi script",
+      "text_markings": "not clearly visible",
+      "description": "pink and blue spiral-bound book with paisley-patterned cover and writing on top",
       "confidence": "high"
     },
     {
       "label": "pen",
       "relation": "on",
       "shape": "cylindrical",
-      "material": "plastic and metal",
+      "material": "plastic",
       "color": "white and silver",
       "text_markings": null,
+      "description": "white and silver pen lying horizontally on top of a book",
       "confidence": "high"
     },
     {
       "label": "tablet",
       "relation": "on",
       "shape": "rectangular",
-      "material": "glass and plastic",
+      "material": "glass",
       "color": "dark gray",
       "text_markings": null,
+      "description": "dark gray rectangular tablet with smooth surface",
       "confidence": "high"
     },
     {
@@ -81,6 +89,7 @@
       "material": "fabric",
       "color": "black",
       "text_markings": null,
+      "description": "black fabric backpack with visible straps and zipper",
       "confidence": "high"
     },
     {
@@ -90,6 +99,7 @@
       "material": "fabric",
       "color": "white with red and black floral patterns",
       "text_markings": null,
+      "description": "white fabric laundry basket with red and black floral patterns",
       "confidence": "high"
     }
   ],
@@ -101,6 +111,7 @@
       "material": "paper",
       "color": "white",
       "text_markings": null,
+      "description": "white cylindrical tissue roll with a single sheet pulled out",
       "confidence": "high"
     },
     {
@@ -110,42 +121,47 @@
       "material": "plastic",
       "color": "transparent with red lid",
       "text_markings": null,
+      "description": "clear plastic jar with red lid and floral pattern, containing mixed contents",
       "confidence": "high"
     },
     {
       "label": "electric kettle",
       "relation": "inside",
       "shape": "cylindrical with curved handle",
-      "material": "metallic",
+      "material": "stainless steel and black plastic",
       "color": "silver and black",
       "text_markings": null,
+      "description": "silver and black electric kettle with curved handle, partially obscured by plastic bag",
       "confidence": "high"
     },
     {
       "label": "plastic bag",
       "relation": "on",
-      "shape": "rectangular, crumpled",
+      "shape": "irregular",
       "material": "plastic",
       "color": "black and white checkered",
       "text_markings": null,
+      "description": "black and white checkered plastic bag crumpled on the shelf",
       "confidence": "high"
     },
     {
       "label": "onion",
       "relation": "on",
       "shape": "spherical",
-      "material": "vegetable skin",
+      "material": "skin",
       "color": "red",
       "text_markings": null,
+      "description": "red onion with papery skin, partially peeled",
       "confidence": "high"
     },
     {
       "label": "garlic",
       "relation": "on",
-      "shape": "spherical cluster",
-      "material": "vegetable skin",
+      "shape": "spherical",
+      "material": "skin",
       "color": "white",
       "text_markings": null,
+      "description": "white garlic bulb with papery skin, partially peeled",
       "confidence": "high"
     },
     {
@@ -154,26 +170,29 @@
       "shape": "cylindrical",
       "material": "glass",
       "color": "clear with red cap",
-      "text_markings": "RNDOFF",
+      "text_markings": "STOLICHNAYA",
+      "description": "clear glass bottle with red cap and visible 'STOLICHNAYA' text",
       "confidence": "high"
     },
     {
       "label": "plastic container",
       "relation": "on",
-      "shape": "rectangular",
+      "shape": "cylindrical",
       "material": "plastic",
       "color": "green",
       "text_markings": null,
-      "confidence": "high"
+      "description": "green plastic container with lid, partially visible",
+      "confidence": "medium"
     },
     {
       "label": "oil bottle",
       "relation": "on",
-      "shape": "rectangular",
+      "shape": "cylindrical",
       "material": "plastic",
-      "color": "transparent with yellow liquid",
+      "color": "clear with yellow liquid",
       "text_markings": null,
-      "confidence": "high"
+      "description": "clear plastic bottle containing yellow liquid, partially visible",
+      "confidence": "medium"
     }
   ],
   "id_110": [
@@ -181,9 +200,10 @@
       "label": "bottle",
       "relation": "on",
       "shape": "cylindrical",
-      "material": "transparent plastic",
+      "material": "transparent glass",
       "color": "clear",
       "text_markings": null,
+      "description": "clear cylindrical glass bottle with yellow cap, partially filled with liquid",
       "confidence": "high"
     },
     {
@@ -193,15 +213,17 @@
       "material": "plastic",
       "color": "yellow",
       "text_markings": null,
+      "description": "yellow rectangular plastic soap dispenser with pump top",
       "confidence": "high"
     },
     {
       "label": "faucet",
       "relation": "on",
-      "shape": "curved",
+      "shape": "tall and narrow",
       "material": "metal",
       "color": "silver",
       "text_markings": null,
+      "description": "silver tall narrow metal faucet with single handle",
       "confidence": "high"
     },
     {
@@ -211,6 +233,7 @@
       "material": "glass-ceramic",
       "color": "black",
       "text_markings": null,
+      "description": "black rectangular glass-ceramic stove top with visible heating zones",
       "confidence": "high"
     }
   ],
@@ -218,37 +241,41 @@
     {
       "label": "laptop",
       "relation": "on",
-      "shape": "rectangular, thin profile",
+      "shape": "rectangular with open screen",
       "material": "glossy plastic",
       "color": "black",
       "text_markings": "MSI",
+      "description": "black laptop with open screen and visible MSI logo on bezel",
       "confidence": "high"
     },
     {
       "label": "keyboard",
       "relation": "on",
-      "shape": "rectangular, full-size",
+      "shape": "rectangular",
       "material": "glossy plastic",
       "color": "black",
-      "text_markings": "HP",
+      "text_markings": null,
+      "description": "black rectangular keyboard with standard layout and glossy finish",
       "confidence": "high"
     },
     {
       "label": "game controller",
       "relation": "on",
-      "shape": "ergonomic, symmetrical",
+      "shape": "ergonomic with two handles",
       "material": "glossy plastic",
-      "color": "black with red accents",
+      "color": "black with red buttons",
       "text_markings": "AF ESPORTS",
+      "description": "black game controller with red buttons and 'AF ESPORTS' text on top",
       "confidence": "high"
     },
     {
       "label": "mouse",
       "relation": "on",
-      "shape": "ergonomic, curved",
+      "shape": "ergonomic with curved body",
       "material": "glossy plastic",
       "color": "black",
-      "text_markings": "HP",
+      "text_markings": "hp",
+      "description": "black ergonomic mouse with HP logo on the front",
       "confidence": "high"
     },
     {
@@ -258,6 +285,7 @@
       "material": "rubber-coated",
       "color": "black",
       "text_markings": null,
+      "description": "black coiled wire with two-prong plug at the end",
       "confidence": "high"
     },
     {
@@ -265,91 +293,101 @@
       "relation": "near",
       "shape": "metal frame with cushioned seat",
       "material": "metal and fabric",
-      "color": "green and white",
+      "color": "green and white striped",
       "text_markings": null,
+      "description": "green and white striped chair with metal frame and cushioned seat",
       "confidence": "high"
     },
     {
       "label": "power strip",
-      "relation": "near",
+      "relation": "on",
       "shape": "rectangular",
       "material": "plastic",
       "color": "white",
       "text_markings": null,
+      "description": "white rectangular power strip with multiple outlets",
       "confidence": "high"
     },
     {
       "label": "book",
       "relation": "on",
-      "shape": "rectangular, slim",
-      "material": "leather or synthetic cover",
+      "shape": "rectangular",
+      "material": "leather",
       "color": "black",
       "text_markings": null,
+      "description": "black rectangular book with smooth cover",
       "confidence": "high"
     },
     {
       "label": "headphones",
-      "relation": "near",
+      "relation": "on",
       "shape": "circular coil",
       "material": "metal",
       "color": "silver",
       "text_markings": null,
-      "confidence": "medium"
+      "description": "silver circular coil of wire, possibly headphones or a decorative item",
+      "confidence": "high"
     },
     {
       "label": "box",
-      "relation": "near",
+      "relation": "on",
       "shape": "rectangular",
       "material": "metallic",
       "color": "silver",
       "text_markings": null,
-      "confidence": "medium"
+      "description": "silver rectangular box with decorative pattern",
+      "confidence": "high"
     },
     {
       "label": "bottle",
-      "relation": "near",
+      "relation": "on",
       "shape": "cylindrical",
       "material": "plastic",
       "color": "red",
       "text_markings": null,
-      "confidence": "medium"
+      "description": "red cylindrical bottle with white cap",
+      "confidence": "high"
     },
     {
       "label": "candle",
-      "relation": "near",
+      "relation": "on",
       "shape": "cylindrical",
-      "material": "ceramic",
-      "color": "blue",
-      "text_markings": "INDIA",
-      "confidence": "medium"
+      "material": "glass",
+      "color": "clear",
+      "text_markings": null,
+      "description": "clear cylindrical candle in glass container",
+      "confidence": "high"
     },
     {
       "label": "printer",
       "relation": "on",
-      "shape": "rectangular, boxy",
+      "shape": "rectangular",
       "material": "plastic",
       "color": "black",
       "text_markings": null,
+      "description": "black rectangular printer with vent on the side",
       "confidence": "high"
     }
   ],
   "id_41": [
     {
       "label": "suitcase",
-      "relation": "near",
+      "relation": "on",
       "shape": "rectangular",
       "material": "hard plastic",
       "color": "black",
       "text_markings": null,
+      "description": "black rectangular suitcase with wheels and a gray top cover",
       "confidence": "high"
     },
     {
       "label": "backpack",
-      "relation": "near",
-      "shape": "rectangular with straps",
+      "relation": "on",
+      "shape": "rectangular with rounded edges",
       "material": "fabric",
       "color": "blue",
       "text_markings": null,
+      "description": "blue fabric backpack with visible straps and zippers",
       "confidence": "high"
     },
     {
@@ -359,6 +397,7 @@
       "material": "velvet",
       "color": "orange",
       "text_markings": null,
+      "description": "orange velvet pillow with a pink and white fringed blanket underneath",
       "confidence": "high"
     },
     {
@@ -368,6 +407,7 @@
       "material": "fabric",
       "color": "various",
       "text_markings": null,
+      "description": "stack of folded clothes in various colors including blue, white, and brown",
       "confidence": "high"
     },
     {
@@ -377,6 +417,7 @@
       "material": "woven",
       "color": "black",
       "text_markings": null,
+      "description": "black woven basket with textured surface",
       "confidence": "high"
     },
     {
@@ -384,8 +425,9 @@
       "relation": "on",
       "shape": "cylindrical",
       "material": "plastic",
-      "color": "blue",
+      "color": "blue and white",
       "text_markings": "NIVEA MEN",
+      "description": "blue and white cylindrical shampoo bottle with 'NIVEA MEN' text",
       "confidence": "high"
     },
     {
@@ -395,6 +437,7 @@
       "material": "leather",
       "color": "brown",
       "text_markings": null,
+      "description": "brown leather wallet with embossed pattern",
       "confidence": "high"
     },
     {
@@ -404,6 +447,7 @@
       "material": "wood",
       "color": "light brown",
       "text_markings": null,
+      "description": "light brown wooden comb with fine teeth",
       "confidence": "high"
     },
     {
@@ -413,6 +457,7 @@
       "material": "plastic",
       "color": "blue",
       "text_markings": null,
+      "description": "blue rectangular tissue box with white tissue visible",
       "confidence": "high"
     },
     {
@@ -422,6 +467,7 @@
       "material": "paper",
       "color": "black and white",
       "text_markings": null,
+      "description": "black and white rectangular book with vertical text",
       "confidence": "high"
     }
   ]

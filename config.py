@@ -43,3 +43,7 @@ SAM3_MODEL_PATH = Path("sam3/weights/sam3.pt")
 SAM3_CONF = 0.25
 SAM3_HALF = True
 SAM3_SAVE_BINARY_MASKS = True
+
+# --- SAM3 Agent (MLLM chooser) ---
+# Сколько кандидатных масок показывать MLLM для выбора (top-K).
+SAM3_AGENT_TOPK = 3
