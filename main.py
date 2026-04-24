@@ -111,9 +111,6 @@ def main():
         try:
             detailed = vlm_detailer.query(selected, desc, final_result[f"id_{obj_id}"])
             detailed_result[f"id_{obj_id}"] = safe_detailed_descriptions(detailed)
-            if detailed_result[f"id_{obj_id}"] == []:
-                print(detailed)
-                break
         except Exception:
             detailed_result[f"id_{obj_id}"] = []
     release_model(vlm_detailer)

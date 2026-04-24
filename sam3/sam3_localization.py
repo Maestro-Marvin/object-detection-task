@@ -5,11 +5,13 @@ from typing import List
 
 import cv2
 import numpy as np
+import torch
 
 from .sam3_rendering import (
     LocalizationOutputs,
     ensure_output_dirs,
     make_stem,
+    make_stem_in_obj_dir,
     draw_masks_overlay,
     put_title,
     save_overlay,
@@ -46,6 +48,8 @@ class SAM3Localizer:
         self.half = half
         self.save_binary_masks = save_binary_masks
 
+        # Выход структурируем по объектам: out_dir/id_<obj_id>/...
+        # поэтому корневые overlays/masks не используем для записи.
         self._outputs = ensure_output_dirs(out_dir)
 
         overrides = dict(
@@ -69,6 +73,9 @@ class SAM3Localizer:
         id_key = f"id_{obj_id}"
         if not labels:
             return
+
+        # Папка для конкретного опорного объекта
+        obj_outputs = ensure_output_dirs(self.out_dir / id_key)
 
         for crop_path in selected_crops:
             frame_name = Path(crop_path).name
@@ -99,7 +106,7 @@ class SAM3Localizer:
 
                 overlay = draw_masks_overlay(im, masks)
                 overlay = put_title(overlay, f"{id_key} | {text_prompt}")
-                save_overlay(self._outputs, stem, overlay)
+                save_overlay(obj_outputs, stem, overlay)
                 if self.save_binary_masks:
-                    save_union_mask(self._outputs, stem, masks)
+                    save_union_mask(obj_outputs, stem, masks)
 
