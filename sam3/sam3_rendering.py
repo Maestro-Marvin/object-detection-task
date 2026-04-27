@@ -30,12 +30,11 @@ def make_stem(frame_name: str, id_key: str, text_prompt: str) -> str:
     return f"{Path(frame_name).stem}__{id_key}__{safe_label}"
 
 
-def make_stem_in_obj_dir(frame_name: str, text_prompt: str) -> str:
+def make_stem_in_obj_dir(frame_name: str) -> str:
     """
     Stem для случая, когда `id_key` уже закодирован в имени папки (localization/id_<obj>/...).
     """
-    safe_label = sanitize_label(text_prompt)
-    return f"{Path(frame_name).stem}__{safe_label}"
+    return f"{Path(frame_name).stem}"
 
 
 def draw_masks_overlay(image_bgr: np.ndarray, masks: np.ndarray) -> np.ndarray:

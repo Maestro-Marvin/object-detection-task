@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from asyncio import exceptions
 from pathlib import Path
 import tempfile
 from typing import Any, List, Optional
@@ -13,6 +14,7 @@ from .sam3_rendering import (
     ensure_output_dirs,
     make_stem,
     make_stem_in_obj_dir,
+    sanitize_label,
     draw_masks_overlay,
     put_title,
     save_overlay,
@@ -53,10 +55,6 @@ class SAM3Localizer:
         self.save_binary_masks = save_binary_masks
         self.mask_chooser_vlm = mask_chooser_vlm
 
-        # Выход структурируем по объектам: out_dir/id_<obj_id>/...
-        # поэтому корневые overlays/masks не используем для записи.
-        self._outputs = ensure_output_dirs(out_dir)
-
         overrides = dict(
             conf=conf,
             task="segment",
@@ -68,20 +66,6 @@ class SAM3Localizer:
         )
         self.predictor = SAM3SemanticPredictor(overrides=overrides)
 
-    def outputs(self) -> LocalizationOutputs:
-        return self._outputs
-
-    def _build_text_prompt(self, item: Any) -> str:
-        """
-        Для SAM3 используем ТОЛЬКО простой label (без сложных описаний).
-        """
-        if isinstance(item, str):
-            return item.strip()
-
-        if not isinstance(item, dict):
-            return str(item).strip()
-
-        return str(item.get("label", "")).strip()
 
     def localize_object(self, obj_id: int, selected_crops: List[Path], items: List[Any]) -> None:
         """
@@ -91,8 +75,8 @@ class SAM3Localizer:
         if not items:
             return
 
-        # Папка для конкретного опорного объекта
-        obj_outputs = ensure_output_dirs(self.out_dir / id_key)
+        # Корневая папка для конкретного опорного объекта: out_dir/id_<obj_id>/
+        obj_root = self.out_dir / id_key
 
         for crop_path in selected_crops:
             frame_name = Path(crop_path).name
@@ -104,37 +88,28 @@ class SAM3Localizer:
             self.predictor.set_image(str(src_path))
 
             for item in items:
-                text_prompt = self._build_text_prompt(item)
-                if not text_prompt:
-                    continue
+                label_name = item["label"]
+                text_prompt = item["description"]
 
                 masks_t, boxes_t = self.predictor.inference_features(
-                    self.predictor.features, src_shape=src_shape, text=[text_prompt]
+                    self.predictor.features, src_shape=src_shape, text=[label_name]
                 )
 
-                if masks_t is None:
+                if masks_t is None or masks_t.shape[0] == 0:
                     continue
 
                 if masks_t.ndim == 2:
                     masks_t = masks_t[None, ...]
-                if masks_t.shape[0] == 0:
-                    continue
-
+     
                 best_idx = 0
-                chooser_selected = False
                 # Если SAM3 вернул несколько инстансов и у нас есть MLLM-chooser,
                 # попробуем выбрать правильный инстанс по детальному описанию.
                 if self.mask_chooser_vlm is not None and masks_t.shape[0] > 1:
                     try:
-                        # Отберём top-K по score (или по площади), затем попросим MLLM выбрать один.
-                        if boxes_t is not None and boxes_t.ndim == 2 and boxes_t.shape[0] == masks_t.shape[0] and boxes_t.shape[1] >= 5:
-                            scores = boxes_t[:, 4]
-                            topk = int(min(SAM3_AGENT_TOPK, MAX_CROPS_PER_REQUEST - 1, scores.shape[0]))
-                            cand = torch.topk(scores, k=topk).indices.tolist()
-                        else:
-                            areas = masks_t.to(dtype=torch.bool).sum(dim=(1, 2))
-                            topk = int(min(SAM3_AGENT_TOPK, MAX_CROPS_PER_REQUEST - 1, areas.shape[0]))
-                            cand = torch.topk(areas, k=topk).indices.tolist()
+                        # Отберём top-K по score, затем попросим MLLM выбрать один.
+                        scores = boxes_t[:, 4]
+                        topk = int(min(SAM3_AGENT_TOPK, MAX_CROPS_PER_REQUEST - 1, scores.shape[0]))
+                        cand = torch.topk(scores, k=topk).indices.tolist()
 
                         # Не сохраняем кандидатов в `localization/` — создаём временные файлы только для MLLM выбора.
                         overlay_paths: List[Path] = []
@@ -143,38 +118,26 @@ class SAM3Localizer:
                             for j, idx in enumerate(cand, start=1):
                                 m = masks_t[idx : idx + 1].detach().cpu().numpy()
                                 overlay = draw_masks_overlay(im, m)
-                                overlay = put_title(overlay, f"{id_key} | {text_prompt} | cand {j}")
                                 tmp_path = tmp_dir / f"cand_{j}.jpg"
                                 cv2.imwrite(str(tmp_path), overlay)
                                 overlay_paths.append(tmp_path)
-
                             chosen = self.mask_chooser_vlm.choose_best(
                                 raw_image_path=src_path, overlay_paths=overlay_paths, item=item
                             )
                             if chosen is not None and 0 <= chosen < len(cand):
                                 best_idx = int(cand[chosen])
-                                chooser_selected = True
-                    except Exception:
-                        best_idx = 0
-
-                # Фолбэк: max score (boxes_t[:, 4]) после NMS, иначе max area.
-                if not chooser_selected:
-                    try:
-                        if boxes_t is not None and boxes_t.ndim == 2 and boxes_t.shape[0] > 0 and boxes_t.shape[1] >= 5:
-                            best_idx = int(torch.argmax(boxes_t[:, 4]).item())
-                        else:
-                            areas = masks_t.to(dtype=torch.bool).sum(dim=(1, 2))
-                            best_idx = int(torch.argmax(areas).item())
-                    except Exception:
-                        best_idx = 0
+                    except exceptions:
+                        pass
 
                 masks = masks_t[best_idx : best_idx + 1].detach().cpu().numpy()
 
-                stem = make_stem_in_obj_dir(frame_name=frame_name, text_prompt=text_prompt)
+                stem = make_stem_in_obj_dir(frame_name=frame_name)
+                label_dir = obj_root / sanitize_label(label_name)
+                item_outputs = ensure_output_dirs(label_dir)
 
                 overlay = draw_masks_overlay(im, masks)
-                overlay = put_title(overlay, f"{id_key} | {text_prompt}")
-                save_overlay(obj_outputs, stem, overlay)
+                overlay = put_title(overlay, text_prompt)
+                save_overlay(item_outputs, stem, overlay)
                 if self.save_binary_masks:
-                    save_union_mask(obj_outputs, stem, masks)
+                    save_union_mask(item_outputs, stem, masks)
 
