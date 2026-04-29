@@ -1,24 +1,68 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from vllm import LLM, SamplingParams
 from transformers import AutoProcessor
 from qwen_vl_utils import process_vision_info
 from PIL import Image
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from config import TASK_MODEL_NAME, MAX_CROPS_PER_REQUEST
 
-class VLMClient(ABC):
-    def __init__(self, model_name: str = TASK_MODEL_NAME):
-        self.processor = AutoProcessor.from_pretrained(model_name)
+@dataclass(frozen=True)
+class SharedVLMEngine:
+    """
+    Общие ресурсы для VLM: один vLLM движок + один processor.
+    Используем, когда в проекте одна и та же модель во всех стейджах.
+    """
+    model_name: str
+    processor: any
+    llm: any
 
-        self.llm = LLM(
+    @staticmethod
+    def build(model_name: str = TASK_MODEL_NAME, gpu_memory_utilization: float = 0.3) -> "SharedVLMEngine":
+        processor = AutoProcessor.from_pretrained(model_name)
+        llm = LLM(
             model=model_name,
             trust_remote_code=True,
             enforce_eager=True,
             limit_mm_per_prompt={"image": MAX_CROPS_PER_REQUEST},
-            gpu_memory_utilization = 0.3,
-            max_model_len = 32768,
+            gpu_memory_utilization=gpu_memory_utilization,
+            max_model_len=65536,
         )
+        return SharedVLMEngine(model_name=model_name, processor=processor, llm=llm)
+
+    def shutdown(self) -> None:
+        """
+        Аккуратно останавливает engine core.
+        """
+        try:
+            llm_engine = getattr(self.llm, "llm_engine", None)
+            if llm_engine is not None:
+                llm_engine.shutdown()
+        except Exception:
+            pass
+
+class VLMClient(ABC):
+    def __init__(self, model_name: str = TASK_MODEL_NAME, shared: Optional[SharedVLMEngine] = None):
+        if shared is not None:
+            if shared.model_name != model_name:
+                raise ValueError(
+                    f"SharedVLMEngine model mismatch: shared={shared.model_name}, client={model_name}"
+                )
+            self.processor = shared.processor
+            self.llm = shared.llm
+            self._shared = shared
+        else:
+            self.processor = AutoProcessor.from_pretrained(model_name)
+            self.llm = LLM(
+                model=model_name,
+                trust_remote_code=True,
+                enforce_eager=True,
+                limit_mm_per_prompt={"image": MAX_CROPS_PER_REQUEST},
+                gpu_memory_utilization=0.3,
+                max_model_len=32768,
+            )
+            self._shared = None
         self.sampling_params = SamplingParams(max_tokens=1024, temperature=0.0)
 
     def _prepare_messages(self, pil_images: List[Image.Image], prompt_text: str):

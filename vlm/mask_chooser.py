@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 
 from config import DETAIL_MODEL_NAME
 from vlm.base import VLMClient
+from vlm.base import SharedVLMEngine
 
 import re
 from typing import Optional
@@ -35,8 +36,8 @@ class SAM3MaskChooserVLM(VLMClient):
     используя raw кадр и изображения-оверлеи с масками.
     """
 
-    def __init__(self, model_name: str = DETAIL_MODEL_NAME):
-        super().__init__(model_name=model_name)
+    def __init__(self, model_name: str = DETAIL_MODEL_NAME, shared: Optional[SharedVLMEngine] = None):
+        super().__init__(model_name=model_name, shared=shared)
 
     def query(self, image_paths: List[Path], item: Any) -> str:
         item_text = item["description"]

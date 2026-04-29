@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from config import DETAIL_MODEL_NAME
 from .base import VLMClient
+from .base import SharedVLMEngine
 
 
 class ItemDetailerVLM(VLMClient):
@@ -12,8 +13,8 @@ class ItemDetailerVLM(VLMClient):
     возвращает детальные описания (форма/цвет/текстура/надписи).
     """
 
-    def __init__(self, model_name: str = DETAIL_MODEL_NAME):
-        super().__init__(model_name)
+    def __init__(self, model_name: str = DETAIL_MODEL_NAME, shared: Optional[SharedVLMEngine] = None):
+        super().__init__(model_name, shared=shared)
         self.sampling_params.max_tokens = 2048
 
     def query(self, image_paths: List[Path], support_description: str, predicted_labels: List[str]) -> str:

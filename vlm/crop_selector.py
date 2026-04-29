@@ -1,12 +1,13 @@
 from .base import VLMClient
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from config import SELECTOR_MODEL_NAME
+from .base import SharedVLMEngine
 
 class CropSelectorVLM(VLMClient):
 
-    def __init__(self, model_name: str = SELECTOR_MODEL_NAME):
-        super().__init__(model_name)
+    def __init__(self, model_name: str = SELECTOR_MODEL_NAME, shared: Optional[SharedVLMEngine] = None):
+        super().__init__(model_name, shared=shared)
 
     def query(self, image_paths: List[Path], description: str, obj_id: int) -> str:
 

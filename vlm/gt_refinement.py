@@ -1,9 +1,13 @@
 from .base import VLMClient
 from PIL import Image
 from pathlib import Path
-from typing import List
+from typing import List, Optional
+from .base import SharedVLMEngine
 
 class GTRefinementVLM(VLMClient):
+    def __init__(self, model_name: str = "Qwen/Qwen3-VL-8B-Instruct", shared: Optional[SharedVLMEngine] = None):
+        super().__init__(model_name, shared=shared)
+
     def query(self, image_paths: List[Path], support_description: str, candidates: List[str]) -> str:
         if not candidates:
             return "[]"
