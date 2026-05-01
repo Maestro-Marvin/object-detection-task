@@ -47,3 +47,5 @@ SAM3_SAVE_BINARY_MASKS = True
 # --- SAM3 Agent (MLLM chooser) ---
 # Сколько кандидатных масок показывать MLLM для выбора (top-K).
 SAM3_AGENT_TOPK = 3
+# Сохранять candidate-оверлеи, среди которых выбирает VLM.
+SAM3_SAVE_CHOOSER_CANDIDATES = True

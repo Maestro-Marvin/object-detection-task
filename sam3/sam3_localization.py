@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from asyncio import exceptions
 from pathlib import Path
-import tempfile
 from typing import Any, List, Optional
 
 import cv2
@@ -90,6 +88,7 @@ class SAM3Localizer:
             for item in items:
                 label_name = item["label"]
                 text_prompt = item["description"]
+                label_dir = obj_root / sanitize_label(label_name)
 
                 masks_t, boxes_t = self.predictor.inference_features(
                     self.predictor.features, src_shape=src_shape, text=[label_name]
@@ -111,28 +110,27 @@ class SAM3Localizer:
                         topk = int(min(SAM3_AGENT_TOPK, MAX_CROPS_PER_REQUEST - 1, scores.shape[0]))
                         cand = torch.topk(scores, k=topk).indices.tolist()
 
-                        # Не сохраняем кандидатов в `localization/` — создаём временные файлы только для MLLM выбора.
+                        # Сохраняем кандидатов прямо в папку label_dir.
+                        label_dir.mkdir(parents=True, exist_ok=True)
                         overlay_paths: List[Path] = []
-                        with tempfile.TemporaryDirectory(prefix="sam3_agent_") as td:
-                            tmp_dir = Path(td)
-                            for j, idx in enumerate(cand, start=1):
-                                m = masks_t[idx : idx + 1].detach().cpu().numpy()
-                                overlay = draw_masks_overlay(im, m)
-                                tmp_path = tmp_dir / f"cand_{j}.jpg"
-                                cv2.imwrite(str(tmp_path), overlay)
-                                overlay_paths.append(tmp_path)
-                            chosen = self.mask_chooser_vlm.choose_best(
-                                raw_image_path=src_path, overlay_paths=overlay_paths, item=item
-                            )
-                            if chosen is not None and 0 <= chosen < len(cand):
-                                best_idx = int(cand[chosen])
-                    except exceptions:
+                        for j, idx in enumerate(cand, start=1):
+                            m = masks_t[idx : idx + 1].detach().cpu().numpy()
+                            overlay = draw_masks_overlay(im, m)
+                            score = float(scores[idx].item())
+                            out_path = label_dir / f"{Path(frame_name).stem}__cand_{j}__score_{score:.3f}.jpg"
+                            cv2.imwrite(str(out_path), overlay)
+                            overlay_paths.append(out_path)
+                        chosen = self.mask_chooser_vlm.choose_best(
+                            raw_image_path=src_path, overlay_paths=overlay_paths, item=item
+                        )
+                        if chosen is not None and 0 <= chosen < len(cand):
+                            best_idx = int(cand[chosen])
+                    except Exception:
                         pass
 
                 masks = masks_t[best_idx : best_idx + 1].detach().cpu().numpy()
 
                 stem = make_stem_in_obj_dir(frame_name=frame_name)
-                label_dir = obj_root / sanitize_label(label_name)
                 item_outputs = ensure_output_dirs(label_dir)
 
                 overlay = draw_masks_overlay(im, masks)

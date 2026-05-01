@@ -19,6 +19,7 @@ from vlm.crop_selector import CropSelectorVLM
 from vlm.gt_refinement import GTRefinementVLM
 from vlm.item_detailer import ItemDetailerVLM
 from vlm.scene_understanding import SceneUnderstandingVLM
+from vlm.mask_chooser import SAM3MaskChooserVLM
 
 def setup_logging():
     logging.basicConfig(
@@ -62,6 +63,7 @@ def main():
         with open(TEMP_GT_JSON, "r", encoding="utf-8") as f:
             temp_gt = json.load(f)
             temp_gt = {int(k) if k.isdigit() else k: v for k, v in temp_gt.items()}
+        
         try:
             with open(SELECTED_CROPS, "r", encoding="utf-8") as f:
                 selected_crops_cache = json.load(f)
@@ -91,8 +93,7 @@ def main():
                 selected_crops_cache[cache_key] = [str(p) for p in selected_paths]
                 save_result(selected_crops_cache, SELECTED_CROPS)
             selected_by_object[obj_id] = selected
-
-        
+        """
         logger.info("Stage 2/4: scene understanding...")
         vlm_task = SceneUnderstandingVLM(shared=shared_vlm)
         for obj_id, selected in selected_by_object.items():
@@ -119,20 +120,18 @@ def main():
             except Exception:
                 detailed_result[f"id_{obj_id}"] = []
         save_result(detailed_result, DETAILED_PRED_JSON)
-
+        """
         with open(DETAILED_PRED_JSON, "r", encoding="utf-8") as f:
             detailed_result = json.load(f)
         
 
         logger.info("Stage 4/4: SAM3 localization on original frames...")
-        from vlm.mask_chooser import SAM3MaskChooserVLM
 
         mask_chooser = SAM3MaskChooserVLM(shared=shared_vlm)
         sam3_localizer = SAM3Localizer(mask_chooser_vlm=mask_chooser)
         for obj_id, selected in selected_by_object.items():
             try:
-                id_key = f"id_{obj_id}"
-                items = detailed_result.get(id_key) or final_result.get(id_key, [])
+                items = detailed_result[f"id_{obj_id}"]
                 sam3_localizer.localize_object(
                     obj_id=obj_id,
                     selected_crops=selected,
@@ -140,7 +139,7 @@ def main():
                 )
             except Exception as e:
                 logger.exception(f"SAM3 localization failed: {e}")
-
+        """
         logger.info("Stage 4/4: GT refinement...")
         vlm_refiner = GTRefinementVLM(shared=shared_vlm)
         for obj_id, selected in selected_by_object.items():
@@ -167,7 +166,7 @@ def main():
         logger.info("Calculating metrics...")
         metrics = calculate_metrics(results)
         save_result(metrics, METRICS_JSON)
-
+        """
     finally:
         shared_vlm.shutdown()
 
