@@ -1,60 +1,88 @@
 {
-  "id_79": [
-    "laptop",
-    "earphones",
+  "id_1": [
     "pillow",
     "blanket",
-    "book"
-  ],
-  "id_16": [
+    "laptop",
+    "earphones",
+    "smartphone",
     "book",
-    "pen",
-    "tablet",
+    "basket"
+  ],
+  "id_2": [
+    "notebook",
+    "smartphone",
     "backpack",
-    "laundry basket"
+    "laundry basket",
+    "suitcase",
+    "briefcase"
   ],
-  "id_117": [
-    "tissue roll",
-    "jar",
-    "electric kettle",
-    "plastic bag",
-    "onion",
-    "garlic",
-    "alcohol bottle",
-    "plastic container",
-    "oil bottle"
-  ],
-  "id_110": [
+  "id_3": [
     "bottle",
     "soap dispenser",
-    "faucet",
+    "sink",
     "stove"
   ],
-  "id_15": [
+  "id_4": [],
+  "id_5": [
+    "pot",
+    "pan",
+    "cutting board",
+    "alcohol bottle",
+    "plastic bag",
+    "apron",
+    "onion",
+    "tissue box"
+  ],
+  "id_6": [
     "laptop",
     "keyboard",
-    "game controller",
     "mouse",
-    "wire",
+    "game controller",
+    "printer",
+    "lamp",
     "chair",
-    "power strip",
-    "book",
     "headphones",
+    "camera",
+    "notebook",
+    "cable",
+    "pen holder",
+    "scissors",
     "box",
-    "bottle",
-    "candle",
-    "printer"
+    "usb drive"
   ],
-  "id_41": [
+  "id_7": [
+    "pot",
+    "pan",
+    "cutting board",
+    "jar",
+    "bottle",
+    "plastic bag",
+    "box",
+    "jacket",
+    "shelf"
+  ],
+  "id_8": [
     "suitcase",
     "backpack",
-    "pillow",
-    "clothes",
     "basket",
-    "shampoo bottle",
+    "clothes",
+    "bottle",
     "wallet",
-    "comb",
+    "electric kettle",
+    "plastic bag",
+    "cutting board"
+  ],
+  "id_9": [
     "tissue box",
-    "book"
+    "jar",
+    "remote control",
+    "bottle",
+    "plastic bag",
+    "paper towel",
+    "cutting board",
+    "pot",
+    "pan",
+    "bottle cap",
+    "electrical plug"
   ]
 }

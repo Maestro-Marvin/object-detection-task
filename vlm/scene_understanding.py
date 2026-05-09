@@ -1,8 +1,12 @@
-from .base import VLMClient
-from PIL import Image
+import json
+import logging
 from pathlib import Path
-from typing import List, Optional
-from .base import SharedVLMEngine
+from typing import Any, Dict, List, Optional
+
+from config import PRED_JSON
+from utils.aggregator import save_result
+
+from .base import SharedVLMEngine, VLMClient
 
 class SceneUnderstandingVLM(VLMClient):
     def __init__(self, model_name: str = "Qwen/Qwen3-VL-8B-Instruct", shared: Optional[SharedVLMEngine] = None):
@@ -39,3 +43,43 @@ class SceneUnderstandingVLM(VLMClient):
         Now analyze the images and return your answer."""
 
         return self._run_inference(image_paths, prompt_text)
+
+    @staticmethod
+    def _parse_associated_items_list(raw: Any) -> List[str]:
+        if isinstance(raw, list):
+            return [str(x).strip().lower() for x in raw if str(x).strip()]
+        if raw is None:
+            return []
+        text = str(raw).strip()
+        if not text or text.lower() in ("none", "[]"):
+            return []
+        try:
+            parsed = json.loads(text)
+        except Exception:
+            return []
+        if not isinstance(parsed, list):
+            return []
+        return [str(x).strip().lower() for x in parsed if isinstance(x, str) and x.strip()]
+
+    def predict_associated_items(
+        self,
+        selected_by_object: Dict[int, List[Path]],
+        support_descriptions: Dict[int, str],
+        *,
+        persist: bool = False,
+        output_path: Optional[Path] = None,
+    ) -> Dict[str, List[str]]:
+        """Запрос к модели → парсинг в список строк; при persist сохраняет JSON."""
+        log = logging.getLogger(__name__)
+        out: Dict[str, List[str]] = {}
+        for obj_id, selected in selected_by_object.items():
+            desc = support_descriptions[obj_id]
+            log.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
+            try:
+                raw = self.query(selected, desc)
+                out[f"id_{obj_id}"] = self._parse_associated_items_list(raw)
+            except Exception:
+                out[f"id_{obj_id}"] = []
+        if persist:
+            save_result(out, output_path if output_path is not None else PRED_JSON)
+        return out

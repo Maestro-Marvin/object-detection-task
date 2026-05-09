@@ -1,10 +1,13 @@
 import json
+import logging
+import re
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
-from config import DETAIL_MODEL_NAME
-from .base import VLMClient
-from .base import SharedVLMEngine
+from config import DETAIL_MODEL_NAME, DETAILED_PRED_JSON
+from utils.aggregator import save_result
+
+from .base import SharedVLMEngine, VLMClient
 
 
 class ItemDetailerVLM(VLMClient):
@@ -150,4 +153,59 @@ class ItemDetailerVLM(VLMClient):
         Now analyze the images and return your answer."""
 
         return self._run_inference(image_paths, prompt_text)
+
+    @staticmethod
+    def _parse_detailed_descriptions(raw: Any) -> List[dict]:
+        if isinstance(raw, list):
+            return [
+                item
+                for item in raw
+                if isinstance(item, dict) and "label" in item
+            ]
+        if raw is None:
+            return []
+        text = str(raw).strip()
+        if not text or text.lower() in ("none", "[]"):
+            return []
+        text = re.sub(r"^```json\s*", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"^```\s*", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*```$", "", text, flags=re.IGNORECASE)
+        text = text.strip()
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, list):
+                return [
+                    item
+                    for item in parsed
+                    if isinstance(item, dict) and "label" in item
+                ]
+        except Exception:
+            pass
+        return []
+
+    def predict_detailed_descriptions(
+        self,
+        selected_by_object: Dict[int, List[Path]],
+        support_descriptions: Dict[int, str],
+        scene_labels_by_object_id: Dict[str, List[str]],
+        *,
+        persist: bool = False,
+        output_path: Optional[Path] = None,
+    ) -> Dict[str, List[Any]]:
+        """Ответы модели → список объектов с полем label; при persist сохраняет JSON."""
+        log = logging.getLogger(__name__)
+        out: Dict[str, List[Any]] = {}
+        for obj_id, selected in selected_by_object.items():
+            key = f"id_{obj_id}"
+            labels = scene_labels_by_object_id.get(key, [])
+            desc = support_descriptions[obj_id]
+            log.info(f"Querying detail VLM for {obj_id}: {desc} ({len(selected)} crops)")
+            try:
+                raw = self.query(selected, desc, labels)
+                out[key] = self._parse_detailed_descriptions(raw)
+            except Exception:
+                out[key] = []
+        if persist:
+            save_result(out, output_path if output_path is not None else DETAILED_PRED_JSON)
+        return out
 

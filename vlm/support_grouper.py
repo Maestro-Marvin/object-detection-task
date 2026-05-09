@@ -1,7 +1,9 @@
+import json
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, List, Optional, Tuple
 
 from config import TASK_MODEL_NAME
+
 from .base import SharedVLMEngine, VLMClient
 
 
@@ -42,4 +44,44 @@ or
 {"present": false, "label": null}
 """
         return self._run_inference(image_paths, prompt_text)
+
+    @staticmethod
+    def _parse_support_reply(raw: Any) -> Tuple[bool, Optional[str]]:
+        """
+        Парсит JSON вида {"present": true/false, "label": "desk"|null}.
+        Возвращает (present, label).
+        """
+        if raw is None:
+            return (False, None)
+
+        text = str(raw).strip()
+        if not text:
+            return (False, None)
+
+        try:
+            parsed = json.loads(text)
+        except Exception:
+            return (False, None)
+
+        if not isinstance(parsed, dict):
+            return (False, None)
+
+        present = bool(parsed.get("present", False))
+        label = parsed.get("label", None)
+        if not present:
+            return (False, None)
+        if label is None:
+            return (True, None)
+        if isinstance(label, str):
+            s = label.strip().lower()
+            return (True, s or None)
+        return (True, None)
+
+    def classify_frame(self, image_path: Path) -> Tuple[bool, Optional[str]]:
+        """Ответ модели сразу парсится в (present, label)."""
+        try:
+            raw = self.query([image_path])
+            return self._parse_support_reply(raw)
+        except Exception:
+            return (False, None)
 
