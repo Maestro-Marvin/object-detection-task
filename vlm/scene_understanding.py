@@ -63,23 +63,21 @@ class SceneUnderstandingVLM(VLMClient):
 
     def predict_associated_items(
         self,
-        selected_by_object: Dict[int, List[Path]],
-        support_descriptions: Dict[int, str],
+        selected_by_support: Dict[str, List[Path]],
         *,
         persist: bool = False,
         output_path: Optional[Path] = None,
     ) -> Dict[str, List[str]]:
-        """Запрос к модели → парсинг в список строк; при persist сохраняет JSON."""
+        """Ключи — названия опорных объектов; при persist сохраняет JSON с теми же ключами."""
         log = logging.getLogger(__name__)
         out: Dict[str, List[str]] = {}
-        for obj_id, selected in selected_by_object.items():
-            desc = support_descriptions[obj_id]
-            log.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        for support_label, selected in selected_by_support.items():
+            log.info(f"Querying task VLM for support '{support_label}' ({len(selected)} crops)")
             try:
-                raw = self.query(selected, desc)
-                out[f"id_{obj_id}"] = self._parse_associated_items_list(raw)
+                raw = self.query(selected, support_label)
+                out[support_label] = self._parse_associated_items_list(raw)
             except Exception:
-                out[f"id_{obj_id}"] = []
+                out[support_label] = []
         if persist:
             save_result(out, output_path if output_path is not None else PRED_JSON)
         return out

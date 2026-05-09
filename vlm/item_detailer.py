@@ -185,26 +185,23 @@ class ItemDetailerVLM(VLMClient):
 
     def predict_detailed_descriptions(
         self,
-        selected_by_object: Dict[int, List[Path]],
-        support_descriptions: Dict[int, str],
-        scene_labels_by_object_id: Dict[str, List[str]],
+        selected_by_support: Dict[str, List[Path]],
+        scene_labels_by_support: Dict[str, List[str]],
         *,
         persist: bool = False,
         output_path: Optional[Path] = None,
     ) -> Dict[str, List[Any]]:
-        """Ответы модели → список объектов с полем label; при persist сохраняет JSON."""
+        """Ключи — названия опор; соответствуют predictions.json."""
         log = logging.getLogger(__name__)
         out: Dict[str, List[Any]] = {}
-        for obj_id, selected in selected_by_object.items():
-            key = f"id_{obj_id}"
-            labels = scene_labels_by_object_id.get(key, [])
-            desc = support_descriptions[obj_id]
-            log.info(f"Querying detail VLM for {obj_id}: {desc} ({len(selected)} crops)")
+        for support_label, selected in selected_by_support.items():
+            labels = scene_labels_by_support.get(support_label, [])
+            log.info(f"Querying detail VLM for support '{support_label}' ({len(selected)} crops)")
             try:
-                raw = self.query(selected, desc, labels)
-                out[key] = self._parse_detailed_descriptions(raw)
+                raw = self.query(selected, support_label, labels)
+                out[support_label] = self._parse_detailed_descriptions(raw)
             except Exception:
-                out[key] = []
+                out[support_label] = []
         if persist:
             save_result(out, output_path if output_path is not None else DETAILED_PRED_JSON)
         return out

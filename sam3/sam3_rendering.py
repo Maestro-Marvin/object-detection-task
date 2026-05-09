@@ -31,9 +31,7 @@ def make_stem(frame_name: str, id_key: str, text_prompt: str) -> str:
 
 
 def make_stem_in_obj_dir(frame_name: str) -> str:
-    """
-    Stem для случая, когда `id_key` уже закодирован в имени папки (localization/id_<obj>/...).
-    """
+    """Stem, когда корневая папка уже задаёт опору (localization/<support>/...)."""
     return f"{Path(frame_name).stem}"
 
 

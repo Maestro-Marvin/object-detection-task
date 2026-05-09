@@ -29,17 +29,17 @@ class SAM3LocalizationRunner:
 
     def localize_all(
         self,
-        selected_by_object: Dict[int, List[Path]],
+        selected_by_support: Dict[str, List[Path]],
         detailed_result: Dict[str, List[Any]],
         *,
         logger: Optional[logging.Logger] = None,
     ) -> None:
         log = logger or logging.getLogger(__name__)
-        for obj_id, selected in selected_by_object.items():
+        for support_label, selected in selected_by_support.items():
             try:
-                items = detailed_result[f"id_{obj_id}"]
+                items = detailed_result[support_label]
                 self._localizer.localize_object(
-                    obj_id=obj_id,
+                    support_label=support_label,
                     selected_crops=selected,
                     items=items,
                 )

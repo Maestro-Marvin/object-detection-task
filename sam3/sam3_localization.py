@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 from typing import Any, List, Optional
 
@@ -30,8 +31,8 @@ class SAM3Localizer:
 
     Использование в stage:
       localizer = SAM3Localizer(...)
-      for obj_id, selected_crops in selected_by_object.items():
-          localizer.localize_object(obj_id, selected_crops, labels)
+      for support_label, selected_crops in crops_by_support.items():
+          localizer.localize_object(support_label, selected_crops, items)
     """
 
     def __init__(
@@ -66,16 +67,15 @@ class SAM3Localizer:
         self.predictor = SAM3SemanticPredictor(overrides=overrides)
 
 
-    def localize_object(self, obj_id: int, selected_crops: List[Path], items: List[Any]) -> None:
+    def localize_object(self, support_label: str, selected_crops: List[Path], items: List[Any]) -> None:
         """
-        Локализует все `items` (подробные описания или label) на исходных кадрах, соответствующих `selected_crops`.
+        Локализует все `items` на кадрах `selected_crops`.
+        Выход: out_dir/<sanitized_support_label>/...
         """
-        id_key = f"id_{obj_id}"
         if not items:
             return
 
-        # Корневая папка для конкретного опорного объекта: out_dir/id_<obj_id>/
-        obj_root = self.out_dir / id_key
+        obj_root = self.out_dir / sanitize_label(support_label)
 
         for crop_path in selected_crops:
             frame_name = Path(crop_path).name
@@ -106,26 +106,24 @@ class SAM3Localizer:
                 # попробуем выбрать правильный инстанс по детальному описанию.
                 if self.mask_chooser_vlm is not None and masks_t.shape[0] > 1:
                     try:
-                        # Отберём top-K по score, затем попросим MLLM выбрать один.
                         scores = boxes_t[:, 4]
                         topk = int(min(SAM3_AGENT_TOPK, MAX_CROPS_PER_REQUEST - 1, scores.shape[0]))
                         cand = torch.topk(scores, k=topk).indices.tolist()
 
-                        # Сохраняем кандидатов прямо в папку label_dir.
-                        label_dir.mkdir(parents=True, exist_ok=True)
-                        overlay_paths: List[Path] = []
-                        for j, idx in enumerate(cand, start=1):
-                            m = masks_t[idx : idx + 1].detach().cpu().numpy()
-                            overlay = draw_masks_overlay(im, m)
-                            score = float(scores[idx].item())
-                            out_path = label_dir / f"{Path(frame_name).stem}__cand_{j}__score_{score:.3f}.jpg"
-                            cv2.imwrite(str(out_path), overlay)
-                            overlay_paths.append(out_path)
-                        chosen = self.mask_chooser_vlm.choose_best(
-                            raw_image_path=src_path, overlay_paths=overlay_paths, item=item
-                        )
-                        if chosen is not None and 0 <= chosen < len(cand):
-                            best_idx = int(cand[chosen])
+                        with tempfile.TemporaryDirectory(prefix="sam3_mask_cand_") as tmpdir:
+                            overlay_paths: List[Path] = []
+                            tmp_root = Path(tmpdir)
+                            for j, idx in enumerate(cand, start=1):
+                                m = masks_t[idx : idx + 1].detach().cpu().numpy()
+                                overlay = draw_masks_overlay(im, m)
+                                out_path = tmp_root / f"cand_{j}.jpg"
+                                cv2.imwrite(str(out_path), overlay)
+                                overlay_paths.append(out_path)
+                            chosen = self.mask_chooser_vlm.choose_best(
+                                raw_image_path=src_path, overlay_paths=overlay_paths, item=item
+                            )
+                            if chosen is not None and 0 <= chosen < len(cand):
+                                best_idx = int(cand[chosen])
                     except Exception:
                         pass
 

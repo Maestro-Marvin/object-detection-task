@@ -32,23 +32,21 @@ def main():
         logger.info("Stage 2/4: associated items prediction...")
         vlm_task = SceneUnderstandingVLM(shared=shared_vlm)
         final_result = vlm_task.predict_associated_items(
-            consolidation.selected_by_object,
-            consolidation.support_descriptions,
+            consolidation.selected_by_support,
             persist=True,
         )
 
         logger.info("Stage 3/4: detailed item descriptions...")
         vlm_detailer = ItemDetailerVLM(shared=shared_vlm)
         detailed_result = vlm_detailer.predict_detailed_descriptions(
-            consolidation.selected_by_object,
-            consolidation.support_descriptions,
+            consolidation.selected_by_support,
             final_result,
             persist=True,
         )
 
         logger.info("Stage 4/4: localization on original frames...")
         SAM3LocalizationRunner(shared_vlm).localize_all(
-            consolidation.selected_by_object,
+            consolidation.selected_by_support,
             detailed_result,
             logger=logger,
         )

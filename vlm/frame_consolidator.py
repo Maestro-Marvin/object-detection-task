@@ -142,10 +142,9 @@ class FrameConsolidationResult:
     raw_frames_by_support: dict[str, list[str]]
     best_frames_by_support: dict[str, list[str]]
     best_paths_by_support: dict[str, list[Path]]
-    support_labels: tuple[str, ...]  # без служебной группы __unknown__
-    selected_by_object: dict[int, list[Path]]
-    support_descriptions: dict[int, str]
-    selected_crops_cache: dict[str, list[str]]
+    support_labels: tuple[str, ...]  # без __unknown__
+    selected_by_support: dict[str, list[Path]]  # ключ — название опоры
+    selected_crops_cache: dict[str, list[str]]  # ключ — название опоры
 
 
 class FrameConsolidator:
@@ -196,14 +195,12 @@ class FrameConsolidator:
         best_frames_by_support = _sorted_support_dict(best_paths_by_support)
 
         support_labels = tuple(k for k in sorted(best_paths_by_support.keys()) if k != "__unknown__")
-        selected_by_object: dict[int, list[Path]] = {}
-        support_descriptions: dict[int, str] = {}
+        selected_by_support: dict[str, list[Path]] = {}
         selected_crops_cache: dict[str, list[str]] = {}
-        for obj_idx, support_label in enumerate(support_labels, start=1):
+        for support_label in support_labels:
             selected = best_paths_by_support.get(support_label, [])
-            selected_by_object[obj_idx] = selected
-            support_descriptions[obj_idx] = support_label
-            selected_crops_cache[str(obj_idx)] = [str(p) for p in selected]
+            selected_by_support[support_label] = selected
+            selected_crops_cache[support_label] = [str(p) for p in selected]
 
         if persist:
             save_result(raw_frames_by_support, raw_json_path or FRAMES_BY_SUPPORT_RAW_JSON)
@@ -216,7 +213,6 @@ class FrameConsolidator:
             best_frames_by_support=best_frames_by_support,
             best_paths_by_support=best_paths_by_support,
             support_labels=support_labels,
-            selected_by_object=selected_by_object,
-            support_descriptions=support_descriptions,
+            selected_by_support=selected_by_support,
             selected_crops_cache=selected_crops_cache,
         )
