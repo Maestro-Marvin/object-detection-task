@@ -1,40 +1,53 @@
 {
-  "79": [
-    "crops/79/frame_004030.jpg",
-    "crops/79/frame_004250.jpg",
-    "crops/79/frame_010260.jpg",
-    "crops/79/frame_013510.jpg"
+  "1": [
+    "scenes/scene2/rgb/frame_004000.jpg",
+    "scenes/scene2/rgb/frame_004200.jpg",
+    "scenes/scene2/rgb/frame_004300.jpg",
+    "scenes/scene2/rgb/frame_013450.jpg"
   ],
-  "16": [
-    "crops/16/frame_004390.jpg",
-    "crops/16/frame_004780.jpg",
-    "crops/16/frame_005100.jpg",
-    "crops/16/frame_013470.jpg",
-    "crops/16/frame_013500.jpg"
+  "2": [
+    "scenes/scene2/rgb/frame_004400.jpg",
+    "scenes/scene2/rgb/frame_004500.jpg",
+    "scenes/scene2/rgb/frame_005000.jpg"
   ],
-  "117": [
-    "crops/117/frame_008410.jpg",
-    "crops/117/frame_009050.jpg",
-    "crops/117/frame_009690.jpg",
-    "crops/117/frame_013630.jpg"
+  "3": [
+    "scenes/scene2/rgb/frame_006150.jpg",
+    "scenes/scene2/rgb/frame_010700.jpg",
+    "scenes/scene2/rgb/frame_013750.jpg"
   ],
-  "110": [
-    "crops/110/frame_007120.jpg",
-    "crops/110/frame_007260.jpg",
-    "crops/110/frame_013690.jpg",
-    "crops/110/frame_013740.jpg",
-    "crops/110/frame_013780.jpg"
+  "4": [
+    "scenes/scene2/rgb/frame_003250.jpg",
+    "scenes/scene2/rgb/frame_003350.jpg",
+    "scenes/scene2/rgb/frame_003450.jpg",
+    "scenes/scene2/rgb/frame_003500.jpg"
   ],
-  "15": [
-    "crops/15/frame_001570.jpg",
-    "crops/15/frame_003690.jpg",
-    "crops/15/frame_010450.jpg"
+  "5": [
+    "scenes/scene2/rgb/frame_007500.jpg",
+    "scenes/scene2/rgb/frame_007600.jpg",
+    "scenes/scene2/rgb/frame_007700.jpg",
+    "scenes/scene2/rgb/frame_008250.jpg"
   ],
-  "41": [
-    "crops/41/frame_004930.jpg",
-    "crops/41/frame_005570.jpg",
-    "crops/41/frame_006260.jpg",
-    "crops/41/frame_006360.jpg",
-    "crops/41/frame_013300.jpg"
+  "6": [
+    "scenes/scene2/rgb/frame_000900.jpg",
+    "scenes/scene2/rgb/frame_001850.jpg",
+    "scenes/scene2/rgb/frame_001900.jpg",
+    "scenes/scene2/rgb/frame_003600.jpg",
+    "scenes/scene2/rgb/frame_010500.jpg"
+  ],
+  "7": [
+    "scenes/scene2/rgb/frame_008050.jpg"
+  ],
+  "8": [
+    "scenes/scene2/rgb/frame_005850.jpg",
+    "scenes/scene2/rgb/frame_006400.jpg",
+    "scenes/scene2/rgb/frame_009100.jpg",
+    "scenes/scene2/rgb/frame_013600.jpg"
+  ],
+  "9": [
+    "scenes/scene2/rgb/frame_004700.jpg",
+    "scenes/scene2/rgb/frame_006750.jpg",
+    "scenes/scene2/rgb/frame_009400.jpg",
+    "scenes/scene2/rgb/frame_009800.jpg",
+    "scenes/scene2/rgb/frame_009850.jpg"
   ]
 }

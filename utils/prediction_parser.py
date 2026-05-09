@@ -1,6 +1,6 @@
 import re
 import json
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 
 _BRACKET_RE = re.compile(r"\[([^\]]+)\]")
@@ -70,6 +70,32 @@ def safe_json_list(raw: Any) -> List[str]:
     return [str(x).strip().lower() for x in parsed if isinstance(x, str) and x.strip()]
 
 
+def safe_json_string_or_null(raw: Any) -> Optional[str]:
+    """
+    Парсит строго JSON-строку (например: "desk") или null.
+    Возвращает нормализованную строку (lower/strip) или None.
+    """
+    if raw is None:
+        return None
+    if isinstance(raw, str):
+        text = raw.strip()
+    else:
+        text = str(raw).strip()
+    if not text or text.lower() in ("none", "null"):
+        return None
+    try:
+        parsed = json.loads(text)
+    except Exception:
+        # Если модель вернула просто слово без кавычек — примем как строку.
+        return text.strip().lower() if text else None
+    if parsed is None:
+        return None
+    if isinstance(parsed, str):
+        s = parsed.strip().lower()
+        return s or None
+    return None
+
+
 def safe_detailed_descriptions(raw: Any) -> List[dict]:
     if isinstance(raw, list):
         valid_items = []
@@ -97,3 +123,35 @@ def safe_detailed_descriptions(raw: Any) -> List[dict]:
     except Exception:
         pass
     return []
+
+
+def safe_support_group(raw: Any) -> Tuple[bool, Optional[str]]:
+    """
+    Парсит JSON вида {"present": true/false, "label": "desk"|null}.
+    Возвращает (present, label).
+    """
+    if raw is None:
+        return (False, None)
+
+    text = str(raw).strip()
+    if not text:
+        return (False, None)
+
+    try:
+        parsed = json.loads(text)
+    except Exception:
+        return (False, None)
+
+    if not isinstance(parsed, dict):
+        return (False, None)
+
+    present = bool(parsed.get("present", False))
+    label = parsed.get("label", None)
+    if not present:
+        return (False, None)
+    if label is None:
+        return (True, None)
+    if isinstance(label, str):
+        s = label.strip().lower()
+        return (True, s or None)
+    return (True, None)

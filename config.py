@@ -49,3 +49,14 @@ SAM3_SAVE_BINARY_MASKS = True
 SAM3_AGENT_TOPK = 3
 # Сохранять candidate-оверлеи, среди которых выбирает VLM.
 SAM3_SAVE_CHOOSER_CANDIDATES = True
+
+# --- End-to-end support discovery ---
+# Сколько репрезентативных кадров отправлять в VLM для поиска опорных объектов.
+SUPPORT_DISCOVERY_FRAMES = 5
+
+# --- End-to-end global frame selection ---
+# Брать каждый N-й кадр из исходной последовательности.
+FRAME_STRIDE = 5
+# Сколько итераций турнирного отбора применить к прореженным кадрам.
+# Каждый раунд попарно сравнивает кадры и "прореживает" последовательность.
+BEST_FRAMES_TOURNAMENT_ITERS = 2

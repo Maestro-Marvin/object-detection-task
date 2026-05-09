@@ -3,23 +3,16 @@ import json
 from pathlib import Path
 
 from config import *
-from evaluate.calculate_metrics import calculate_metrics
-from evaluate.evaluator import Evaluator
 from sam3.sam3_localization import SAM3Localizer
 from support_objects.select_best_crops import select_best_crops_tournament
-from support_objects.select_support_object import select_support_objects
 from utils.aggregator import *
-from utils.clear_memory import release_model
-from utils.cropper import save_crop
-from utils.data_loader import load_descriptions, load_frame_and_mask
-from utils.gt_builder import GTBuilder
-from utils.prediction_parser import safe_detailed_descriptions, safe_json_list
+from utils.prediction_parser import safe_detailed_descriptions, safe_json_list, safe_support_group
 from vlm.base import SharedVLMEngine
-from vlm.crop_selector import CropSelectorVLM
-from vlm.gt_refinement import GTRefinementVLM
+from vlm.frame_selector import FrameSelectorVLM
 from vlm.item_detailer import ItemDetailerVLM
-from vlm.scene_understanding import SceneUnderstandingVLM
 from vlm.mask_chooser import SAM3MaskChooserVLM
+from vlm.scene_understanding import SceneUnderstandingVLM
+from vlm.support_grouper import SupportGrouperVLM
 
 def setup_logging():
     logging.basicConfig(
@@ -34,70 +27,80 @@ def main():
     setup_logging()
     logger = logging.getLogger(__name__)
 
-    shared_vlm = SharedVLMEngine.build(model_name=TASK_MODEL_NAME, gpu_memory_utilization=0.5)
+    frame_paths = sorted([p for p in FRAMES_DIR.iterdir() if p.suffix.lower() in (".jpg", ".jpeg")], key=lambda p: p.name)
+
+    shared_vlm = SharedVLMEngine.build(model_name=TASK_MODEL_NAME, gpu_memory_utilization=0.3)
     try:
-        CROPS_DIR.mkdir(exist_ok=True)
-        logger.info("Loading object descriptions...")
-        descriptions = load_descriptions(DESC_PATH)
+        logger.info(f"Processing {len(frame_paths)} frames (end-to-end mode)...")
 
-        frame_names = sorted([f.name for f in FRAMES_DIR.iterdir() if f.suffix.lower() in (".jpg", ".jpeg")])
-        logger.info(f"Processing {len(frame_names)} frames...")
-        """
-        gt_builder = GTBuilder(descriptions)
-        for frame_name in frame_names:
-            logger.info(f"Processing {frame_name}...")
-            rgb, mask = load_frame_and_mask(frame_name, FRAMES_DIR, MASKS_DIR)
-            if mask is None:
+        # Step 1a: keep only each N-th frame
+        sampled_frames = frame_paths[:: max(1, int(FRAME_STRIDE))]
+        logger.info(f"Step 1a: sampled frames = {len(sampled_frames)} (stride={FRAME_STRIDE})")
+
+        # Step 1b: group sampled frames by dominant support (VLM)
+        logger.info("Step 1b: grouping sampled frames by dominant support...")
+        grouper = SupportGrouperVLM(shared=shared_vlm)
+        frames_by_support: dict[str, list[Path]] = {}
+        for p in sampled_frames:
+            try:
+                raw = grouper.query([p])
+                present, label = safe_support_group(raw)
+            except Exception:
+                present, label = (False, None)
+            if not present:
                 continue
-            supports = select_support_objects(mask, descriptions)
-            support_ids = [obj["id"] for obj in supports]
+            key = label if label is not None else "__unknown__"
+            frames_by_support.setdefault(key, []).append(p)
 
-            frame_id = frame_name.split(".")[0]
-            for obj in supports:
-                save_crop(rgb, mask, obj["bbox"], obj["id"], support_ids, frame_id, CROPS_DIR)
+        # Save raw grouping before tournament (for debugging)
+        raw_frames_by_support: dict[str, list[str]] = {}
+        for k, paths in frames_by_support.items():
+            raw_frames_by_support[k] = sorted([p.name for p in paths])
+        raw_frames_by_support = dict(sorted(raw_frames_by_support.items(), key=lambda kv: kv[0]))
+        save_result(raw_frames_by_support, Path("results/frames_by_support_raw.json"))
 
-            gt_builder.process_frame(mask, supports)
-        temp_gt = gt_builder.build_gt()
-        save_result(temp_gt, TEMP_GT_JSON)
-        """
-        with open(TEMP_GT_JSON, "r", encoding="utf-8") as f:
-            temp_gt = json.load(f)
-            temp_gt = {int(k) if k.isdigit() else k: v for k, v in temp_gt.items()}
-        
-        try:
-            with open(SELECTED_CROPS, "r", encoding="utf-8") as f:
-                selected_crops_cache = json.load(f)
-        except FileNotFoundError:
-            selected_crops_cache = {}
+        # Step 1c: tournament selection inside each support group until <= 5 frames
+        logger.info("Step 1c: tournament selection per support group...")
+        frame_selector = FrameSelectorVLM(shared=shared_vlm)
+        best_frames_by_support: dict[str, list[str]] = {}
+        best_paths_by_support: dict[str, list[Path]] = {}
+        for support_label, paths in frames_by_support.items():
+            selected = select_best_crops_tournament(
+                crop_paths=paths,
+                selector=frame_selector,
+                description=support_label,
+                obj_id=0,
+            )
+            best_paths_by_support[support_label] = selected
+            best_frames_by_support[support_label] = sorted([p.name for p in selected])
 
-        object_crops = collect_crops_by_object(CROPS_DIR)
-        selected_by_object = {}
-        final_result = {}
-        detailed_result = {}
-        final_gt = {}
+        # стабильный порядок для удобного диффа/чтения
+        best_frames_by_support = dict(sorted(best_frames_by_support.items(), key=lambda kv: kv[0]))
+        save_result(best_frames_by_support, Path("results/frames_by_support.json"))
 
-        logger.info("Stage 1/4: selecting best crops...")
-        vlm_selector = CropSelectorVLM(shared=shared_vlm)
-        for obj_id, crop_paths in object_crops.items():
-            desc = descriptions[obj_id][0]
-            cache_key = str(obj_id)
-            if cache_key in selected_crops_cache:
-                selected = [Path(p) for p in selected_crops_cache[cache_key]]
-            else:
-                try:
-                    selected_paths = select_best_crops_tournament(crop_paths, vlm_selector, desc, obj_id)
-                except Exception:
-                    selected_paths = []
+        # Далее работаем по группам: support_label -> выбранные кадры (<=5)
+        support_labels = [k for k in sorted(best_paths_by_support.keys()) if k != "__unknown__"]
+        if not support_labels:
+            logger.warning("No support groups found (all frames unknown/absent). Stopping pipeline.")
+            return
 
-                selected = selected_paths
-                selected_crops_cache[cache_key] = [str(p) for p in selected_paths]
-                save_result(selected_crops_cache, SELECTED_CROPS)
-            selected_by_object[obj_id] = selected
-        """
+        selected_by_object: dict[int, list[Path]] = {}
+        support_descriptions: dict[int, str] = {}
+        selected_crops_cache: dict[str, list[str]] = {}
+
+        for obj_idx, support_label in enumerate(support_labels, start=1):
+            selected = best_paths_by_support.get(support_label, [])
+            selected_by_object[obj_idx] = selected
+            support_descriptions[obj_idx] = support_label
+            selected_crops_cache[str(obj_idx)] = [str(p) for p in selected]
+
+        save_result(selected_crops_cache, SELECTED_CROPS)
+
         logger.info("Stage 2/4: scene understanding...")
         vlm_task = SceneUnderstandingVLM(shared=shared_vlm)
+        final_result = {}
         for obj_id, selected in selected_by_object.items():
-            desc = descriptions[obj_id][0]
+            desc = support_descriptions[obj_id]
             logger.info(f"Querying task VLM for {obj_id}: {desc} ({len(selected)} crops)")
             try:
                 response_text = vlm_task.query(selected, desc)
@@ -111,8 +114,9 @@ def main():
 
         logger.info("Stage 3/4: detailed item descriptions...")
         vlm_detailer = ItemDetailerVLM(shared=shared_vlm)
+        detailed_result = {}
         for obj_id, selected in selected_by_object.items():
-            desc = descriptions[obj_id][0]
+            desc = support_descriptions[obj_id]
             logger.info(f"Querying detail VLM for {obj_id}: {desc} ({len(selected)} crops)")
             try:
                 detailed = vlm_detailer.query(selected, desc, final_result[f"id_{obj_id}"])
@@ -120,7 +124,6 @@ def main():
             except Exception:
                 detailed_result[f"id_{obj_id}"] = []
         save_result(detailed_result, DETAILED_PRED_JSON)
-        """
         with open(DETAILED_PRED_JSON, "r", encoding="utf-8") as f:
             detailed_result = json.load(f)
         
@@ -139,34 +142,6 @@ def main():
                 )
             except Exception as e:
                 logger.exception(f"SAM3 localization failed: {e}")
-        """
-        logger.info("Stage 4/4: GT refinement...")
-        vlm_refiner = GTRefinementVLM(shared=shared_vlm)
-        for obj_id, selected in selected_by_object.items():
-            desc = descriptions[obj_id][0]
-            candidates = temp_gt.get(obj_id, [])
-            logger.info(f"Querying refiner VLM for {obj_id}: {desc} ({len(selected)} crops)")
-            try:
-                response_text = vlm_refiner.query(selected, desc, candidates)
-                final_gt[f"id_{obj_id}"] = safe_json_list(response_text)
-            except Exception:
-                final_gt[f"id_{obj_id}"] = []
-        save_result(final_gt, GT_JSON)
-
-        with open(PRED_JSON, "r", encoding="utf-8") as f:
-            final_result = json.load(f)
-        with open(GT_JSON, "r", encoding="utf-8") as f:
-            final_gt = json.load(f)
-
-        logger.info("Running evaluation...")
-        evaluator = Evaluator(descriptions)
-        results = evaluator.evaluate(final_result, final_gt)
-        save_result(results, REPORT_JSON)
-
-        logger.info("Calculating metrics...")
-        metrics = calculate_metrics(results)
-        save_result(metrics, METRICS_JSON)
-        """
     finally:
         shared_vlm.shutdown()
 

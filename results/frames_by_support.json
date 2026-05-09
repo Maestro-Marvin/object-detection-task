@@ -1,0 +1,53 @@
+{
+  "bed": [
+    "frame_004000.jpg",
+    "frame_004200.jpg",
+    "frame_004300.jpg",
+    "frame_013450.jpg"
+  ],
+  "bench": [
+    "frame_004400.jpg",
+    "frame_004500.jpg",
+    "frame_005000.jpg"
+  ],
+  "cabinet": [
+    "frame_006150.jpg",
+    "frame_010700.jpg",
+    "frame_013750.jpg"
+  ],
+  "chair": [
+    "frame_003250.jpg",
+    "frame_003350.jpg",
+    "frame_003450.jpg",
+    "frame_003500.jpg"
+  ],
+  "countertop": [
+    "frame_007500.jpg",
+    "frame_007600.jpg",
+    "frame_007700.jpg",
+    "frame_008250.jpg"
+  ],
+  "desk": [
+    "frame_000900.jpg",
+    "frame_001850.jpg",
+    "frame_001900.jpg",
+    "frame_003600.jpg",
+    "frame_010500.jpg"
+  ],
+  "floor": [
+    "frame_008050.jpg"
+  ],
+  "shelf": [
+    "frame_005850.jpg",
+    "frame_006400.jpg",
+    "frame_009100.jpg",
+    "frame_013600.jpg"
+  ],
+  "table": [
+    "frame_004700.jpg",
+    "frame_006750.jpg",
+    "frame_009400.jpg",
+    "frame_009800.jpg",
+    "frame_009850.jpg"
+  ]
+}
