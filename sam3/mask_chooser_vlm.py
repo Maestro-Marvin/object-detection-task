@@ -1,39 +1,27 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
 from config import DETAIL_MODEL_NAME
-from vlm.base import VLMClient
-from vlm.base import SharedVLMEngine
+from vlm.base import SharedVLMEngine, VLMClient
 
-import re
-from typing import Optional
 
 def _parse_best_index(text: str, k: int) -> Optional[int]:
-    """
-    Извлекает число из ответа модели.
-    """
     if not text:
         return None
-    
-    # 1. Попытка найти первое целое число в тексте (Regex)
-    # Ищем число, которое находится в диапазоне [1, k]
-    matches = re.findall(r'\b(\d+)\b', text)
-    
+    matches = re.findall(r"\b(\d+)\b", text)
     for match in matches:
         val = int(match)
         if 1 <= val <= k:
-            return val - 1  # Конвертируем в 0-based index
-    
-    # 2. Если числа не найдены или они вне диапазона
+            return val - 1
     return None
 
 
 class SAM3MaskChooserVLM(VLMClient):
     """
-    Небольшой MLLM-хелпер: выбирает лучшую маску среди K кандидатных,
-    используя raw кадр и изображения-оверлеи с масками.
+    MLLM выбирает лучшую маску среди K кандидатов (raw кадр + оверлеи).
     """
 
     def __init__(self, model_name: str = DETAIL_MODEL_NAME, shared: Optional[SharedVLMEngine] = None):
@@ -67,11 +55,8 @@ class SAM3MaskChooserVLM(VLMClient):
         return self._run_inference(image_paths=image_paths, prompt_text=prompt_text)
 
     def choose_best(self, raw_image_path: Path, overlay_paths: List[Path], item: Any) -> Optional[int]:
-        """
-        Возвращает 0-based индекс в overlay_paths.
-        """
+        """Возвращает 0-based индекс в overlay_paths."""
         if not overlay_paths:
             return None
         text = self.query([raw_image_path, *overlay_paths], item=item)
         return _parse_best_index(text, k=len(overlay_paths))
-

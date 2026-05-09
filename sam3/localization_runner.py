@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from vlm.base import SharedVLMEngine
-from vlm.mask_chooser import SAM3MaskChooserVLM
 
+from .mask_chooser_vlm import SAM3MaskChooserVLM
 from .sam3_localization import SAM3Localizer
 
 

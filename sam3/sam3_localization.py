@@ -21,7 +21,8 @@ from .sam3_rendering import (
 
 from config import FRAMES_DIR, LOCALIZATION_DIR, SAM3_MODEL_PATH, SAM3_CONF, SAM3_HALF, SAM3_SAVE_BINARY_MASKS
 from config import MAX_CROPS_PER_REQUEST, SAM3_AGENT_TOPK
-from vlm.mask_chooser import SAM3MaskChooserVLM
+
+from .mask_chooser_vlm import SAM3MaskChooserVLM
 
 class SAM3Localizer:
     """

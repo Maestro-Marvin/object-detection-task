@@ -1,11 +1,11 @@
 from pathlib import Path
 from config import MAX_CROPS_PER_REQUEST
-from vlm.crop_selector import CropSelectorVLM
-from support_objects.tournament import run_tournament_round
+from support_objects.tournament import ABSelector, run_tournament_round
+
 
 def select_best_crops_tournament(
     crop_paths: list[Path],
-    selector: CropSelectorVLM,
+    selector: ABSelector,
     description: str,
     obj_id: int,
 ) -> list[Path]:
