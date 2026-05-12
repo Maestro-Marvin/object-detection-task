@@ -1,0 +1,53 @@
+{
+  "bed": [
+    "scenes/scene2/rgb/frame_004000.jpg",
+    "scenes/scene2/rgb/frame_004200.jpg",
+    "scenes/scene2/rgb/frame_004300.jpg",
+    "scenes/scene2/rgb/frame_013450.jpg"
+  ],
+  "bench": [
+    "scenes/scene2/rgb/frame_004400.jpg",
+    "scenes/scene2/rgb/frame_004500.jpg",
+    "scenes/scene2/rgb/frame_005000.jpg"
+  ],
+  "cabinet": [
+    "scenes/scene2/rgb/frame_006150.jpg",
+    "scenes/scene2/rgb/frame_010700.jpg",
+    "scenes/scene2/rgb/frame_013750.jpg"
+  ],
+  "chair": [
+    "scenes/scene2/rgb/frame_003250.jpg",
+    "scenes/scene2/rgb/frame_003350.jpg",
+    "scenes/scene2/rgb/frame_003450.jpg",
+    "scenes/scene2/rgb/frame_003500.jpg"
+  ],
+  "countertop": [
+    "scenes/scene2/rgb/frame_007500.jpg",
+    "scenes/scene2/rgb/frame_007600.jpg",
+    "scenes/scene2/rgb/frame_007700.jpg",
+    "scenes/scene2/rgb/frame_008250.jpg"
+  ],
+  "desk": [
+    "scenes/scene2/rgb/frame_000900.jpg",
+    "scenes/scene2/rgb/frame_001850.jpg",
+    "scenes/scene2/rgb/frame_001900.jpg",
+    "scenes/scene2/rgb/frame_003600.jpg",
+    "scenes/scene2/rgb/frame_010500.jpg"
+  ],
+  "floor": [
+    "scenes/scene2/rgb/frame_008050.jpg"
+  ],
+  "shelf": [
+    "scenes/scene2/rgb/frame_005850.jpg",
+    "scenes/scene2/rgb/frame_006400.jpg",
+    "scenes/scene2/rgb/frame_009100.jpg",
+    "scenes/scene2/rgb/frame_013600.jpg"
+  ],
+  "table": [
+    "scenes/scene2/rgb/frame_004700.jpg",
+    "scenes/scene2/rgb/frame_006750.jpg",
+    "scenes/scene2/rgb/frame_009400.jpg",
+    "scenes/scene2/rgb/frame_009800.jpg",
+    "scenes/scene2/rgb/frame_009850.jpg"
+  ]
+}

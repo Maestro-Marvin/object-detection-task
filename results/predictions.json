@@ -1,0 +1,88 @@
+{
+  "bed": [
+    "pillow",
+    "blanket",
+    "laptop",
+    "earphones",
+    "smartphone",
+    "book",
+    "basket"
+  ],
+  "bench": [
+    "notebook",
+    "smartphone",
+    "backpack",
+    "laundry basket",
+    "suitcase",
+    "briefcase"
+  ],
+  "cabinet": [
+    "bottle",
+    "soap dispenser",
+    "sink",
+    "stove"
+  ],
+  "chair": [],
+  "countertop": [
+    "pot",
+    "pan",
+    "cutting board",
+    "alcohol bottle",
+    "plastic bag",
+    "apron",
+    "onion",
+    "tissue box"
+  ],
+  "desk": [
+    "laptop",
+    "keyboard",
+    "mouse",
+    "game controller",
+    "printer",
+    "lamp",
+    "chair",
+    "headphones",
+    "camera",
+    "notebook",
+    "cable",
+    "pen holder",
+    "scissors",
+    "box",
+    "usb drive"
+  ],
+  "floor": [
+    "pot",
+    "pan",
+    "cutting board",
+    "jar",
+    "bottle",
+    "plastic bag",
+    "box",
+    "jacket",
+    "shelf"
+  ],
+  "shelf": [
+    "suitcase",
+    "backpack",
+    "basket",
+    "clothes",
+    "bottle",
+    "wallet",
+    "electric kettle",
+    "plastic bag",
+    "cutting board"
+  ],
+  "table": [
+    "tissue box",
+    "jar",
+    "remote control",
+    "bottle",
+    "plastic bag",
+    "paper towel",
+    "cutting board",
+    "pot",
+    "pan",
+    "bottle cap",
+    "electrical plug"
+  ]
+}
