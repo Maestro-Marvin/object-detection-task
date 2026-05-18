@@ -1,5 +1,5 @@
 from pathlib import Path
-from config import MAX_CROPS_PER_REQUEST
+from config import TOURNAMENT_TARGET_CROPS
 from vlm.crop_selector import CropSelectorVLM
 
 def select_best_crops_tournament(
@@ -10,18 +10,23 @@ def select_best_crops_tournament(
 ) -> list[Path]:
     """
     Турнирное "прореживание" кропов: сравниваем попарно и оставляем лучший кадр,
-    пока не останется <= MAX_CROPS_PER_REQUEST.
+    пока не останется ровно TOURNAMENT_TARGET_CROPS.
+    Турнир можно прервать посередине раунда, если набралось ровно target кадров.
     """
+    target = TOURNAMENT_TARGET_CROPS
     crops = list(crop_paths)
-    if len(crops) <= MAX_CROPS_PER_REQUEST:
+    if len(crops) <= target:
         return crops
 
     crops.sort(key=lambda p: p.name)
 
-    while len(crops) > MAX_CROPS_PER_REQUEST:
+    while len(crops) > target:
         next_round: list[Path] = []
         i = 0
         while i < len(crops):
+            if len(next_round) + (len(crops) - i) == target:
+                return next_round + crops[i:]
+
             if i == len(crops) - 1:
                 next_round.append(crops[i])
                 break

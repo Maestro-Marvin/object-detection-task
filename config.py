@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-DATA_ROOT = Path("scenes/scene2")
+DATA_ROOT = Path("scenes/scene1")
 FRAMES_DIR = DATA_ROOT / "rgb"
 MASKS_DIR = DATA_ROOT / "gt_instance_iphone/render_instance_npy"
 DESC_PATH = DATA_ROOT / "gt_categories.json"
@@ -33,19 +33,6 @@ SIMILARITY_THRESHOLD = 0.65
 
 TASK_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
 SELECTOR_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
-DETAIL_MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
 EMBED_MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 MAX_CROPS_PER_REQUEST = 5
-
-# --- SAM3 localization (Ultralytics) ---
-LOCALIZATION_DIR = Path("localization")
-SAM3_MODEL_PATH = Path("sam3/weights/sam3.pt")
-SAM3_CONF = 0.25
-SAM3_HALF = True
-SAM3_SAVE_BINARY_MASKS = True
-
-# --- SAM3 Agent (MLLM chooser) ---
-# Сколько кандидатных масок показывать MLLM для выбора (top-K).
-SAM3_AGENT_TOPK = 3
-# Сохранять candidate-оверлеи, среди которых выбирает VLM.
-SAM3_SAVE_CHOOSER_CANDIDATES = True
+TOURNAMENT_TARGET_CROPS = 4
