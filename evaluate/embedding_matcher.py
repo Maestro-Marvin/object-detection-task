@@ -10,9 +10,9 @@ class EmbeddingMatcher:
         self.llm = LLM(
             model=EMBED_MODEL_NAME,
             runner="pooling",
-            gpu_memory_utilization=0.15,
+            gpu_memory_utilization=0.14,
             trust_remote_code=True,
-            max_model_len=32768
+            max_model_len=16384
         )
         self.task_instruction = (
             "Given a household object name, retrieve semantically similar objects from a scene."

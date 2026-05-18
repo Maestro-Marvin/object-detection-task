@@ -1,0 +1,100 @@
+{
+  "67": [
+    "chair",
+    "backpack",
+    "umbrella",
+    "envelope",
+    "router",
+    "binder",
+    "case",
+    "desk lamp",
+    "exercise book",
+    "clicker",
+    "flask",
+    "desk fan",
+    "book"
+  ],
+  "127": [
+    "digital watch",
+    "container",
+    "camera",
+    "pillow",
+    "bed sheets",
+    "pillow",
+    "computer",
+    "pillow",
+    "case",
+    "shelf"
+  ],
+  "73": [
+    "coat",
+    "button up shirt",
+    "button up shirt",
+    "clothing",
+    "wall",
+    "container",
+    "box",
+    "wall",
+    "hand cream tube",
+    "body lotion dispenser",
+    "aerosol canister",
+    "box"
+  ],
+  "34": [
+    "bed sheets",
+    "box",
+    "desk lamp",
+    "drawers",
+    "microwave",
+    "box",
+    "bowl"
+  ],
+  "63": [
+    "cooking pot",
+    "hand cleanser",
+    "dish soap",
+    "container",
+    "lemon bottle",
+    "container",
+    "canister",
+    "coffee powder",
+    "condiments bottle",
+    "coaster"
+  ],
+  "7": [
+    "coaster",
+    "coaster",
+    "container",
+    "lemon bottle",
+    "condiments bottle",
+    "container",
+    "canister",
+    "coffee powder",
+    "chair"
+  ],
+  "90": [
+    "box",
+    "bowl",
+    "microwave"
+  ],
+  "110": [
+    "toothpaste",
+    "cleaner spray",
+    "bathing mug",
+    "cleaning sponge",
+    "brush",
+    "body wash bottle",
+    "conditioner bottle",
+    "shampoo bottle",
+    "aerosol can",
+    "detergent bottle",
+    "cleaning product"
+  ],
+  "16": [
+    "liquid handsoap bottle",
+    "drain",
+    "running shoes",
+    "door frame",
+    "athletic shoes"
+  ]
+}

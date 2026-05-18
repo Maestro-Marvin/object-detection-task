@@ -1,0 +1,150 @@
+[
+  {
+    "tp": [
+      "brush - brush",
+      "conditioner bottle - conditioner bottle",
+      "cup - bathing mug",
+      "face wash bottle - aerosol can",
+      "laundry detergent bottle - detergent bottle",
+      "shampoo bottle - shampoo bottle",
+      "sponge - cleaning sponge",
+      "spray bottle - cleaner spray"
+    ],
+    "fp": [
+      "small white bottle"
+    ],
+    "fn": [
+      "body wash bottle",
+      "cleaning product"
+    ],
+    "id": "id_110"
+  },
+  {
+    "tp": [
+      "earbuds - case",
+      "laptop - computer",
+      "pillow - pillow"
+    ],
+    "fp": [
+      "blanket"
+    ],
+    "fn": [
+      "bed sheets",
+      "pillow"
+    ],
+    "id": "id_127"
+  },
+  {
+    "tp": [
+      "soap dispenser - liquid handsoap bottle"
+    ],
+    "fp": [
+      "faucet",
+      "slippers"
+    ],
+    "fn": [
+      "athletic shoes",
+      "door frame",
+      "drain"
+    ],
+    "id": "id_16"
+  },
+  {
+    "tp": [
+      "lamp - desk lamp",
+      "microwave - microwave"
+    ],
+    "fp": [],
+    "fn": [
+      "box"
+    ],
+    "id": "id_34"
+  },
+  {
+    "tp": [
+      "bottle - lemon bottle",
+      "dish soap - dish soap",
+      "jar - canister",
+      "pot - cooking pot"
+    ],
+    "fp": [
+      "faucet",
+      "knife",
+      "sink",
+      "spatula"
+    ],
+    "fn": [
+      "condiments bottle",
+      "hand cleanser"
+    ],
+    "id": "id_63"
+  },
+  {
+    "tp": [
+      "backpack - backpack",
+      "book - book",
+      "fan - desk fan"
+    ],
+    "fp": [
+      "charger",
+      "lamp",
+      "mouse",
+      "pen",
+      "water bottle"
+    ],
+    "fn": [
+      "flask"
+    ],
+    "id": "id_67"
+  },
+  {
+    "tp": [
+      "chair - chair",
+      "coaster - coaster",
+      "jar - condiments bottle",
+      "lemon - lemon"
+    ],
+    "fp": [
+      "kettle"
+    ],
+    "fn": [
+      "container"
+    ],
+    "id": "id_7"
+  },
+  {
+    "tp": [
+      "glass - glass jar",
+      "headphones - headphones",
+      "jacket - coat",
+      "plate - plates",
+      "shampoo bottle - body lotion dispenser"
+    ],
+    "fp": [
+      "book",
+      "charger",
+      "smartphone"
+    ],
+    "fn": [
+      "aerosol canister",
+      "box",
+      "container",
+      "hand cream tube",
+      "orange bottle",
+      "phone",
+      "pillow",
+      "watch"
+    ],
+    "id": "id_73"
+  },
+  {
+    "tp": [
+      "blue bowl - bowl",
+      "box - box",
+      "microwave - microwave"
+    ],
+    "fp": [],
+    "fn": [],
+    "id": "id_90"
+  }
+]

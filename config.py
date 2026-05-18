@@ -8,7 +8,6 @@ DESC_PATH = DATA_ROOT / "gt_categories.json"
 CROPS_DIR = Path("crops")
 GT_JSON = Path("results/ground_truth.json")
 PRED_JSON = Path("results/predictions.json")
-DETAILED_PRED_JSON = Path("results/detailed_predictions.json")
 REPORT_JSON = Path("results/report.json")
 METRICS_JSON = Path("results/metrics.json")
 TEMP_GT_JSON = Path("results/temp_gt.json")
