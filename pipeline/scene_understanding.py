@@ -43,8 +43,14 @@ class SceneUnderstandingStage(PipelineStage):
             logger.info("Querying task VLM for %s: %s (%d crops)", obj_id, desc, len(selected))
             try:
                 response_text = vlm_task.query(selected, desc)
-                predictions[f"id_{obj_id}"] = safe_json_list(response_text)
+                parsed = safe_json_list(response_text)
+                if not parsed and response_text.strip():
+                    logger.warning(
+                        "Empty parse for object %s, raw response: %r", obj_id, response_text[:500]
+                    )
+                predictions[f"id_{obj_id}"] = parsed
             except Exception:
+                logger.exception("Scene understanding failed for object %s", obj_id)
                 predictions[f"id_{obj_id}"] = []
 
         self.save(predictions)

@@ -10,7 +10,7 @@ class EmbeddingMatcher:
         self.llm = LLM(
             model=EMBED_MODEL_NAME,
             runner="pooling",
-            gpu_memory_utilization=0.14,
+            gpu_memory_utilization=0.15,
             trust_remote_code=True,
             max_model_len=16384
         )

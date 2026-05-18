@@ -48,8 +48,14 @@ class GtRefinementStage(PipelineStage):
             )
             try:
                 response_text = vlm_refiner.query(selected, desc, candidates)
-                final_gt[f"id_{obj_id}"] = safe_json_list(response_text)
+                parsed = safe_json_list(response_text)
+                if not parsed and response_text.strip() and candidates:
+                    logger.warning(
+                        "Empty parse for object %s, raw response: %r", obj_id, response_text[:500]
+                    )
+                final_gt[f"id_{obj_id}"] = parsed
             except Exception:
+                logger.exception("GT refinement failed for object %s", obj_id)
                 final_gt[f"id_{obj_id}"] = []
 
         self.save(final_gt)

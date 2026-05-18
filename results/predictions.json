@@ -1,70 +1,69 @@
 {
   "id_90": [
     "microwave",
-    "box",
-    "blue bowl"
+    "blue helmet",
+    "cardboard box",
+    "metal rack"
   ],
-  "id_127": [
-    "laptop",
-    "pillow",
-    "blanket",
-    "earbuds"
-  ],
+  "id_127": [],
   "id_63": [
+    "induction cooktop",
+    "stainless steel sink",
     "pot",
-    "sink",
-    "faucet",
-    "knife",
-    "spatula",
-    "bottle",
-    "dish soap",
-    "jar"
+    "knife block",
+    "utensil holder",
+    "dish soap bottle",
+    "soap dispenser",
+    "chair"
   ],
   "id_67": [
-    "backpack",
     "water bottle",
     "fan",
     "mouse",
-    "charger",
-    "pen",
     "book",
-    "lamp"
+    "mouse pad",
+    "desk",
+    "chair"
   ],
   "id_34": [
+    "lamp",
     "microwave",
-    "lamp"
+    "bed",
+    "rug",
+    "clothes",
+    "cabinet",
+    "wall outlet",
+    "wires",
+    "metal rack"
   ],
   "id_16": [
     "faucet",
     "soap dispenser",
-    "slippers"
+    "slippers",
+    "mirror"
   ],
   "id_110": [
-    "laundry detergent bottle",
-    "small white bottle",
-    "shampoo bottle",
-    "conditioner bottle",
-    "face wash bottle",
-    "spray bottle",
-    "cup",
+    "ariel detergent bottle",
+    "white bottle",
+    "orange bottle",
+    "black bottle",
+    "white bottle with blue cap",
+    "ja! spray bottle",
+    "blue and white cup",
     "brush",
     "sponge"
   ],
-  "id_7": [
-    "chair",
-    "jar",
-    "coaster",
-    "lemon",
-    "kettle"
-  ],
+  "id_7": [],
   "id_73": [
-    "jacket",
+    "black jacket",
     "shampoo bottle",
+    "hand sanitizer",
     "smartphone",
-    "glass",
-    "plate",
-    "book",
     "headphones",
-    "charger"
+    "watch",
+    "glass jar",
+    "book",
+    "plate",
+    "pillow"
   ]
 }

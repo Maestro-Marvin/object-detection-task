@@ -6,15 +6,17 @@
   ],
   "id_127": [
     "pillow",
-    "computer",
     "bed sheets",
+    "computer",
     "pillow",
-    "case"
+    "case",
+    "shelf"
   ],
   "id_63": [
     "cooking pot",
     "hand cleanser",
     "dish soap",
+    "container",
     "lemon bottle",
     "canister",
     "condiments bottle"
@@ -23,11 +25,21 @@
     "backpack",
     "flask",
     "desk fan",
-    "book"
+    "book",
+    "mouse",
+    "router",
+    "exercise book",
+    "binder",
+    "desk lamp",
+    "envelope",
+    "clicker",
+    "case"
   ],
   "id_34": [
     "microwave",
-    "desk lamp",
+    "bed sheets",
+    "drawers",
+    "bowl",
     "box"
   ],
   "id_16": [
@@ -40,34 +52,30 @@
     "detergent bottle",
     "cleaner spray",
     "bathing mug",
-    "cleaning sponge",
     "brush",
+    "cleaning sponge",
     "body wash bottle",
     "conditioner bottle",
-    "shampoo bottle",
-    "aerosol can",
-    "cleaning product"
+    "shampoo bottle"
   ],
   "id_7": [
     "chair",
     "coaster",
-    "lemon",
+    "lemon bottle",
     "condiments bottle",
-    "container"
+    "container",
+    "canister",
+    "coffee powder"
   ],
   "id_73": [
     "coat",
-    "hand cream tube",
-    "body lotion dispenser",
-    "aerosol canister",
+    "button up shirt",
+    "clothing",
+    "wall",
     "container",
     "box",
-    "phone",
-    "headphones",
-    "glass jar",
-    "orange bottle",
-    "watch",
-    "plates",
-    "pillow"
+    "hand cream tube",
+    "body lotion dispenser",
+    "aerosol canister"
   ]
 }

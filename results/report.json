@@ -1,36 +1,34 @@
 [
   {
     "tp": [
+      "ariel detergent bottle - detergent bottle",
       "brush - brush",
-      "conditioner bottle - conditioner bottle",
-      "cup - bathing mug",
-      "face wash bottle - aerosol can",
-      "laundry detergent bottle - detergent bottle",
-      "shampoo bottle - shampoo bottle",
+      "ja! spray bottle - conditioner bottle",
       "sponge - cleaning sponge",
-      "spray bottle - cleaner spray"
+      "white bottle - shampoo bottle"
     ],
     "fp": [
-      "small white bottle"
+      "black bottle",
+      "blue and white cup",
+      "orange bottle",
+      "white bottle with blue cap"
     ],
     "fn": [
+      "bathing mug",
       "body wash bottle",
-      "cleaning product"
+      "cleaner spray"
     ],
     "id": "id_110"
   },
   {
-    "tp": [
-      "earbuds - case",
-      "laptop - computer",
-      "pillow - pillow"
-    ],
-    "fp": [
-      "blanket"
-    ],
+    "tp": [],
+    "fp": [],
     "fn": [
       "bed sheets",
-      "pillow"
+      "case",
+      "computer",
+      "pillow",
+      "shelf"
     ],
     "id": "id_127"
   },
@@ -40,6 +38,7 @@
     ],
     "fp": [
       "faucet",
+      "mirror",
       "slippers"
     ],
     "fn": [
@@ -51,100 +50,121 @@
   },
   {
     "tp": [
-      "lamp - desk lamp",
+      "bed - bed sheets",
+      "cabinet - drawers",
       "microwave - microwave"
     ],
-    "fp": [],
+    "fp": [
+      "clothes",
+      "lamp",
+      "metal rack",
+      "rug",
+      "wall outlet",
+      "wires"
+    ],
     "fn": [
+      "bowl",
       "box"
     ],
     "id": "id_34"
   },
   {
     "tp": [
-      "bottle - lemon bottle",
-      "dish soap - dish soap",
-      "jar - canister",
-      "pot - cooking pot"
+      "dish soap bottle - dish soap",
+      "pot - cooking pot",
+      "soap dispenser - hand cleanser"
     ],
     "fp": [
-      "faucet",
-      "knife",
-      "sink",
-      "spatula"
+      "chair",
+      "induction cooktop",
+      "knife block",
+      "stainless steel sink",
+      "utensil holder"
     ],
     "fn": [
+      "canister",
       "condiments bottle",
-      "hand cleanser"
+      "container",
+      "lemon bottle"
     ],
     "id": "id_63"
   },
   {
     "tp": [
-      "backpack - backpack",
       "book - book",
-      "fan - desk fan"
+      "desk - desk lamp",
+      "fan - desk fan",
+      "mouse - mouse"
     ],
     "fp": [
-      "charger",
-      "lamp",
-      "mouse",
-      "pen",
+      "chair",
+      "mouse pad",
       "water bottle"
     ],
     "fn": [
-      "flask"
+      "backpack",
+      "binder",
+      "case",
+      "clicker",
+      "envelope",
+      "exercise book",
+      "flask",
+      "router"
     ],
     "id": "id_67"
   },
   {
-    "tp": [
-      "chair - chair",
-      "coaster - coaster",
-      "jar - condiments bottle",
-      "lemon - lemon"
-    ],
-    "fp": [
-      "kettle"
-    ],
+    "tp": [],
+    "fp": [],
     "fn": [
-      "container"
+      "canister",
+      "chair",
+      "coaster",
+      "coffee powder",
+      "condiments bottle",
+      "container",
+      "lemon bottle"
     ],
     "id": "id_7"
   },
   {
     "tp": [
-      "glass - glass jar",
-      "headphones - headphones",
-      "jacket - coat",
-      "plate - plates",
+      "black jacket - coat",
+      "hand sanitizer - hand cream tube",
       "shampoo bottle - body lotion dispenser"
     ],
     "fp": [
       "book",
-      "charger",
-      "smartphone"
+      "glass jar",
+      "headphones",
+      "pillow",
+      "plate",
+      "smartphone",
+      "watch"
     ],
     "fn": [
       "aerosol canister",
       "box",
+      "button up shirt",
+      "clothing",
       "container",
-      "hand cream tube",
-      "orange bottle",
-      "phone",
-      "pillow",
-      "watch"
+      "wall"
     ],
     "id": "id_73"
   },
   {
     "tp": [
-      "blue bowl - bowl",
-      "box - box",
       "microwave - microwave"
     ],
-    "fp": [],
-    "fn": [],
+    "fp": [
+      "blue helmet",
+      "cardboard box",
+      "metal rack"
+    ],
+    "fn": [
+      "bowl",
+      "box"
+    ],
     "id": "id_90"
   }
 ]

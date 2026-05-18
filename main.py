@@ -30,6 +30,7 @@ def main():
         EvaluationStage().run()
     finally:
         shared_vlm.shutdown()
+        pass
 
 if __name__ == "__main__":
     main()
